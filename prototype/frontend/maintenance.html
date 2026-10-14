@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Hỏng & Bảo Trì Thiết Bị - LabDevice Hub</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Style dùng chung -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+          <i class="bi bi-cpu"></i>
+        </div>
+        <div>
+          <div class="sidebar-title">LabDevice Hub</div>
+          <div class="sidebar-subtitle">Quản lý phòng thực hành</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Hệ thống</div>
+        <a href="index.html" class="sidebar-link">
+          <i class="bi bi-speedometer2"></i>
+          <span>Tổng quan</span>
+        </a>
+
+        <div class="nav-section-title">Phân hệ nghiệp vụ</div>
+        <a href="equipment.html" class="sidebar-link">
+          <i class="bi bi-pc-display-horizontal"></i>
+          <span>Thiết bị & Kiểm kê</span>
+        </a>
+        <a href="borrowing.html" class="sidebar-link">
+          <i class="bi bi-journal-arrow-up"></i>
+          <span>Mượn trả thiết bị</span>
+        </a>
+        <a href="maintenance.html" class="sidebar-link active">
+          <i class="bi bi-tools"></i>
+          <span>Báo hỏng & Bảo trì</span>
+        </a>
+
+      </nav>
+
+
+    </aside>
+
+    <!-- Backdrop cho mobile -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Vùng nội dung chính -->
+    <div class="app-main">
+      <!-- Navbar -->
+      <header class="app-navbar">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Báo hỏng & Bảo trì</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+<div class="navbar-user-badge"><div class="user-avatar"><i class="bi bi-person"></i></div><div class="d-none d-sm-block">Quản trị viên</div></div>
+        </div>
+      </header>
+
+      <!-- Nội dung trang -->
+      <main class="page-container">
+        <!-- Header tiêu đề -->
+        <div class="page-header-box d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <div>
+            <h1 class="page-title">Báo hỏng & Bảo trì</h1>
+            <p class="page-subtitle mb-0">Tiếp nhận sự cố thiết bị, theo dõi lịch sửa chữa và hoàn tất bảo dưỡng</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createDamageReportModal">
+              <i class="bi bi-plus-lg me-1"></i> Báo hỏng thiết bị mới
+            </button>
+          </div>
+        </div>
+
+        <!-- Khối thống kê KPI -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon warning">
+                <i class="bi bi-bell-fill"></i>
+              </div>
+              <div>
+                <div class="stat-value">4</div>
+                <div class="stat-label">Chờ tiếp nhận</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon info">
+                <i class="bi bi-wrench-adjustable"></i>
+              </div>
+              <div>
+                <div class="stat-value">5</div>
+                <div class="stat-label">Đang sửa chữa</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon success">
+                <i class="bi bi-check-circle-fill"></i>
+              </div>
+              <div>
+                <div class="stat-value">14</div>
+                <div class="stat-label">Hoàn thành (Tháng)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon danger">
+                <i class="bi bi-slash-circle-fill"></i>
+              </div>
+              <div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Đề xuất thanh lý</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng danh sách yêu cầu bảo trì -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <div class="d-flex align-items-center gap-2">
+              <h2 class="content-card-title">Danh sách yêu cầu sửa chữa & bảo trì</h2>
+              <span class="badge bg-light text-secondary border" id="itemCountBadge">8 / 8</span>
+            </div>
+          </div>
+
+          <div class="content-card-body">
+            <!-- Bộ lọc và tìm kiếm phẳng gọn -->
+            <div class="table-toolbar">
+              <div class="row g-2 align-items-center">
+                <div class="col-12 col-md-4">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" id="tableSearchInput" class="form-control" placeholder="Tìm theo mã phiếu (BT-xxx), tên thiết bị, phòng...">
+                  </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                  <select class="form-select form-select-sm table-filter-select" data-filter-field="priority">
+                    <option value="all">Tất cả mức ưu tiên</option>
+                    <option value="urgent">Khẩn cấp</option>
+                    <option value="high">Ưu tiên cao</option>
+                    <option value="normal">Bình thường</option>
+                    <option value="low">Thấp</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-3">
+                  <select class="form-select form-select-sm table-filter-select" data-filter-field="status">
+                    <option value="all">Tất cả trạng thái xử lý</option>
+                    <option value="pending">Chờ tiếp nhận</option>
+                    <option value="fixing">Đang sửa chữa</option>
+                    <option value="done">Đã hoàn thành</option>
+                    <option value="discard">Đề xuất thanh lý</option>
+                  </select>
+                </div>
+
+                <div class="col-12 col-md-2 text-end">
+                  <button class="btn btn-outline-secondary btn-sm w-100" id="resetFilterBtn">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>Đặt lại
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table Responsive -->
+            <div class="table-responsive">
+              <table class="table custom-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">STT</th>
+                    <th>Mã phiếu</th>
+                    <th>Thiết bị sự cố</th>
+                    <th>Người báo</th>
+                    <th>Ngày nhận</th>
+                    <th>Mức ưu tiên</th>
+                    <th>Mô tả hiện tượng</th>
+                    <th>Trạng thái</th>
+                    <th class="text-end table-actions-column">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dòng 1: Đang sửa -->
+                  <tr data-search-row="BT-2026-201 TB-2026-003 Máy chiếu Panasonic Lab 301 urgent fixing" data-filter-priority="urgent" data-filter-status="fixing">
+                    <td>1</td>
+                    <td><strong class="text-primary">BT-2026-201</strong></td>
+                    <td>
+                      <div class="fw-semibold">TB-2026-003</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Máy chiếu Panasonic (Lab 301)</div>
+                    </td>
+                    <td>
+                      <div>ThS. Đỗ Hoàng Nam</div>
+                      <small class="text-muted">GV phụ trách Lab</small>
+                    </td>
+                    <td>10/10/2026</td>
+                    <td><span class="badge priority-urgent">Khẩn cấp</span></td>
+                    <td><span class="text-truncate d-inline-block" style="max-width: 200px;">Bóng đèn mờ, quạt làm mát kêu to và tự tắt nguồn sau 10 phút</span></td>
+                    <td>
+                      <span class="badge-status badge-ticket-active">
+                        <span class="badge-status-dot"></span>Đang sửa chữa
+                      </span>
+                    </td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewMaintenanceModal" title="Xem" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#updateMaintenanceModal" title="Cập nhật tiến độ">
+                          <i class="bi bi-pencil-square"></i> Cập nhật
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 2: Chờ tiếp nhận -->
+                  <tr data-search-row="BT-2026-2026 TB-2026-007 Máy trạm HP Z2 Lab 301 high pending" data-filter-priority="high" data-filter-status="pending">
+                    <td>2</td>
+                    <td><strong class="text-primary">BT-2026-202</strong></td>
+                    <td>
+                      <div class="fw-semibold">TB-2026-007</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Máy trạm HP Z2 Tower (Lab 301)</div>
+                    </td>
+                    <td>
+                      <div>Khang (Quản trị viên)</div>
+                      <small class="text-muted">Kiểm kê phát hiện</small>
+                    </td>
+                    <td>13/10/2026</td>
+                    <td><span class="badge priority-high">Ưu tiên cao</span></td>
+                    <td><span class="text-truncate d-inline-block" style="max-width: 200px;">Bấm nút nguồn không sáng đèn, nghi hỏng bộ nguồn PSU 700W</span></td>
+                    <td>
+                      <span class="badge-status badge-ticket-pending">
+                        <span class="badge-status-dot"></span>Chờ tiếp nhận
+                      </span>
+                    </td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewMaintenanceModal" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateMaintenanceModal">
+                          <i class="bi bi-wrench"></i> Tiếp nhận
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 3: Hoàn thành -->
+                  <tr data-search-row="BT-2026-203 TB-2026-002 Dao động ký Tektronix Xưởng ĐT normal done" data-filter-priority="normal" data-filter-status="done">
+                    <td>3</td>
+                    <td><strong class="text-primary">BT-2026-203</strong></td>
+                    <td>
+                      <div class="fw-semibold">TB-2026-002</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Dao động ký Tektronix (Xưởng ĐT)</div>
+                    </td>
+                    <td>
+                      <div>SV Lê Thị Bình</div>
+                      <small class="text-muted">Báo lúc mượn</small>
+                    </td>
+                    <td>01/10/2026</td>
+                    <td><span class="badge priority-normal">Bình thường</span></td>
+                    <td><span class="text-truncate d-inline-block" style="max-width: 200px;">Đứt đầu que đo que dò Ch1 (Probe 100MHz)</span></td>
+                    <td>
+                      <span class="badge-status badge-ticket-returned">
+                        <span class="badge-status-dot"></span>Đã hoàn thành
+                      </span>
+                    </td>
+                    <td class="text-end table-actions-cell">
+                      <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewMaintenanceModal">
+                        <i class="bi bi-eye"></i> Xem biên bản
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 4: Đang sửa -->
+                  <tr data-search-row="BT-2026-204 TB-2026-010 Switch Cisco 2960 Lab 302 normal fixing" data-filter-priority="normal" data-filter-status="fixing">
+                    <td>4</td>
+                    <td><strong class="text-primary">BT-2026-204</strong></td>
+                    <td>
+                      <div class="fw-semibold">TB-2026-010</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Switch Cisco 2960 (Lab 302)</div>
+                    </td>
+                    <td>
+                      <div>Kỹ thuật viên Tuấn</div>
+                      <small class="text-muted">Bộ phận hỗ trợ kỹ thuật</small>
+                    </td>
+                    <td>11/10/2026</td>
+                    <td><span class="badge priority-normal">Bình thường</span></td>
+                    <td><span class="text-truncate d-inline-block" style="max-width: 200px;">Lỗi cổng mạng số 08 và 12 chập chờn tiếp xúc kém</span></td>
+                    <td>
+                      <span class="badge-status badge-ticket-active">
+                        <span class="badge-status-dot"></span>Đang sửa chữa
+                      </span>
+                    </td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewMaintenanceModal" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#updateMaintenanceModal">
+                          <i class="bi bi-pencil-square"></i> Cập nhật
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 5: Đề xuất thanh lý -->
+                  <tr data-search-row="BT-2026-205 TB-2026-015 Màn hình LCD Samsung 24 inch Lab 301 low discard" data-filter-priority="low" data-filter-status="discard">
+                    <td>5</td>
+                    <td><strong class="text-secondary">BT-2026-205</strong></td>
+                    <td>
+                      <div class="fw-semibold">TB-2026-015</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Màn hình LCD Samsung (Lab 301)</div>
+                    </td>
+                    <td>
+                      <div>Khang (Quản trị viên)</div>
+                      <small class="text-muted">Kiểm kê thiết bị</small>
+                    </td>
+                    <td>25/09/2026</td>
+                    <td><span class="badge priority-low">Thấp</span></td>
+                    <td><span class="text-truncate d-inline-block" style="max-width: 200px;">Chết panel màn hình, sọc dọc toàn màn hình, chi phí sửa vượt giá trị</span></td>
+                    <td>
+                      <span class="badge-status badge-locked">
+                        <span class="badge-status-dot"></span>Đề xuất thanh lý
+                      </span>
+                    </td>
+                    <td class="text-end table-actions-cell">
+                      <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#viewMaintenanceModal">
+                        <i class="bi bi-file-earmark-x"></i> Hồ sơ thanh lý
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 6: Chờ tiếp nhận -->
+                  <tr data-search-row="BT-2026-206 TB-2026-004 Bộ kit STM32F4 Discovery Lab IoT high pending" data-filter-priority="high" data-filter-status="pending">
+                    <td>6</td>
+                    <td><strong class="text-primary">BT-2026-206</strong></td>
+                    <td>
+                      <div class="fw-semibold">TB-2026-004</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Bộ kit STM32F4 (Lab IoT)</div>
+                    </td>
+                    <td>
+                      <div>SV Trần Quốc Tuấn</div>
+                      <small class="text-muted">Báo sự cố sau mượn</small>
+                    </td>
+                    <td>12/10/2026</td>
+                    <td><span class="badge priority-high">Ưu tiên cao</span></td>
+                    <td><span class="text-truncate d-inline-block" style="max-width: 200px;">Cổng Micro-USB bị lỏng chân hàn, máy tính không nhận ST-Link</span></td>
+                    <td>
+                      <span class="badge-status badge-ticket-pending">
+                        <span class="badge-status-dot"></span>Chờ tiếp nhận
+                      </span>
+                    </td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewMaintenanceModal" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateMaintenanceModal">
+                          <i class="bi bi-wrench"></i> Tiếp nhận
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 7: Hoàn thành -->
+                  <tr data-search-row="BT-2026-207 TB-2026-018 Máy in tem nhãn Zebra Lab 301 normal done" data-filter-priority="normal" data-filter-status="done">
+                    <td>7</td>
+                    <td><strong class="text-primary">BT-2026-207</strong></td>
+                    <td>
+                      <div class="fw-semibold">TB-2026-018</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Máy in tem QR Zebra (Lab 301)</div>
+                    </td>
+                    <td>
+                      <div>Khang (Quản trị viên)</div>
+                      <small class="text-muted">Quản lý kiểm kê</small>
+                    </td>
+                    <td>04/10/2026</td>
+                    <td><span class="badge priority-normal">Bình thường</span></td>
+                    <td><span class="text-truncate d-inline-block" style="max-width: 200px;">Kẹt cuộn decal nhiệt, vệ sinh đầu in định kỳ</span></td>
+                    <td>
+                      <span class="badge-status badge-ticket-returned">
+                        <span class="badge-status-dot"></span>Đã hoàn thành
+                      </span>
+                    </td>
+                    <td class="text-end table-actions-cell">
+                      <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewMaintenanceModal">
+                        <i class="bi bi-eye"></i> Xem
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 8: Đang kiểm tra -->
+                  <tr data-search-row="BT-2026-208 TB-2026-022 Bộ phát Wifi Ruckus R510 Lab 302 normal fixing" data-filter-priority="normal" data-filter-status="fixing">
+                    <td>8</td>
+                    <td><strong class="text-primary">BT-2026-208</strong></td>
+                    <td>
+                      <div class="fw-semibold">TB-2026-022</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Bộ phát Wifi Ruckus (Lab 302)</div>
+                    </td>
+                    <td>
+                      <div>Kỹ thuật viên Tuấn</div>
+                      <small class="text-muted">Bảo trì hạ tầng mạng</small>
+                    </td>
+                    <td>13/10/2026</td>
+                    <td><span class="badge priority-normal">Bình thường</span></td>
+                    <td><span class="text-truncate d-inline-block" style="max-width: 200px;">Băng tần 5GHz mất sóng định kỳ, đang kiểm tra firmware</span></td>
+                    <td>
+                      <span class="badge-status badge-ticket-active">
+                        <span class="badge-status-dot"></span>Đang kiểm tra
+                      </span>
+                    </td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewMaintenanceModal" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#updateMaintenanceModal">
+                          <i class="bi bi-pencil-square"></i> Cập nhật
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Trạng thái không có kết quả -->
+                  <tr id="emptyStateRow" style="display: none;">
+                    <td colspan="9">
+                      <div class="empty-state">
+                        <div class="empty-state-icon"><i class="bi bi-tools"></i></div>
+                        <h6>Không có yêu cầu bảo trì nào phù hợp</h6>
+                        <p class="mb-2">Thử điều chỉnh lại bộ lọc mức ưu tiên hoặc trạng thái xử lý.</p>
+                        <button class="btn btn-sm btn-outline-primary" onclick="document.getElementById('resetFilterBtn').click()">
+                          Đặt lại bộ lọc
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Phân trang minh họa -->
+            <div class="d-flex align-items-center justify-content-between mt-3 flex-wrap gap-2">
+              <div class="text-muted" style="font-size: 0.85rem;">
+                Hiển thị trang 1 trên 1 (Dữ liệu mẫu 8 yêu cầu)
+              </div>
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL: Tạo phiếu báo hỏng mới -->
+  <div class="modal fade" id="createDamageReportModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-exclamation-triangle text-danger me-2"></i>Tạo phiếu báo hỏng thiết bị
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form data-mock-form="Phiếu báo hỏng" data-mock-action="Gửi báo hỏng" novalidate>
+          <div class="modal-body">
+            <div class="alert alert-warning py-2" style="font-size: 0.82rem;">
+              <i class="bi bi-info-circle me-1"></i> Sau khi ghi nhận báo hỏng, thiết bị sẽ chuyển sang trạng thái <strong>Đang bảo trì</strong> và tự động khóa khỏi luồng cho mượn.
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Chọn thiết bị gặp sự cố<span class="form-required">*</span></label>
+                <select class="form-select" required>
+                  <option value="">-- Chọn thiết bị trong danh mục --</option>
+                  <option value="TB-2026-001">TB-2026-001 — Máy trạm Dell Precision 3660 (Lab 301)</option>
+                  <option value="TB-2026-002">TB-2026-002 — Dao động ký số Tektronix (Xưởng ĐT)</option>
+                  <option value="TB-2026-004">TB-2026-004 — Bộ kit STM32F4 Discovery (Lab IoT)</option>
+                  <option value="TB-2026-005">TB-2026-005 — Switch Cisco Catalyst 2960-X (Lab 302)</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Mức độ ưu tiên xử lý<span class="form-required">*</span></label>
+                <select class="form-select" required>
+                  <option value="normal" selected>Bình thường (Xử lý trong 3-5 ngày)</option>
+                  <option value="high">Ưu tiên cao (Ảnh hưởng tiết thực hành)</option>
+                  <option value="urgent">Khẩn cấp (Sự cố phòng máy, chập cháy)</option>
+                  <option value="low">Thấp (Có thể hoãn lại theo dõi)</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Người phát hiện / Báo hỏng<span class="form-required">*</span></label>
+                <input type="text" class="form-control" placeholder="Họ tên cán bộ hoặc sinh viên" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Thời điểm phát hiện sự cố<span class="form-required">*</span></label>
+                <input type="datetime-local" class="form-control" required>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Mô tả hiện tượng hư hỏng cụ thể<span class="form-required">*</span></label>
+                <textarea class="form-control" rows="3" placeholder="Mô tả chi tiết triệu chứng lỗi: phát tiếng kêu lạ, không lên nguồn, sai lệch thông số, lỗi cổng kết nối..." required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+            <button type="submit" class="btn btn-danger">
+              <i class="bi bi-send-exclamation me-1"></i>Gửi phiếu báo hỏng
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Cập nhật tiến độ bảo trì -->
+  <div class="modal fade" id="updateMaintenanceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-wrench-adjustable-circle text-primary me-2"></i>Cập nhật tiến độ bảo trì phiếu BT-2026-201
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form data-mock-form="Tiến độ bảo trì" data-mock-action="Cập nhật tiến độ" novalidate>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Trạng thái bảo trì mới<span class="form-required">*</span></label>
+                <select class="form-select" required>
+                  <option value="fixing" selected>Đang sửa chữa / Thay thế linh kiện</option>
+                  <option value="done">Đã hoàn thành sửa chữa (Sẵn sàng nghiệm thu)</option>
+                  <option value="discard">Không thể sửa / Đề xuất thanh lý tài sản</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Kỹ thuật viên / Đơn vị thực hiện</label>
+                <input type="text" class="form-control" value="Trung tâm bảo hành Panasonic VN">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Chi phí dự toán sửa chữa (VNĐ)</label>
+                <input type="number" class="form-control" value="1800000" placeholder="Số tiền chi phí">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Ngày dự kiến hoàn thành nghiệm thu</label>
+                <input type="date" class="form-control" value="2026-10-18">
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Chẩn đoán kỹ thuật & Linh kiện cần thay</label>
+                <textarea class="form-control" rows="3">Thay bóng đèn chiếu công suất 230W, bảo dưỡng quạt hút nhiệt và làm sạch tấm lọc bụi ống kính.</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-save me-1"></i>Lưu tiến độ
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Chi tiết phiếu bảo trì -->
+  <div class="modal fade" id="viewMaintenanceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-file-earmark-medical text-primary me-2"></i>Hồ sơ bảo trì BT-2026-201
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <h6 class="fw-bold border-bottom pb-1">Thông tin thiết bị sự cố</h6>
+              <table class="table table-sm table-borderless">
+                <tr><td class="text-muted" style="width: 130px;">Mã thiết bị:</td><td><strong>TB-2026-003</strong></td></tr>
+                <tr><td class="text-muted">Tên thiết bị:</td><td>Máy chiếu Panasonic PT-LB386</td></tr>
+                <tr><td class="text-muted">Phòng quản lý:</td><td>Phòng Lab 301 (Treo trần)</td></tr>
+                <tr><td class="text-muted">Ngày phát hiện:</td><td>10/10/2026</td></tr>
+              </table>
+            </div>
+
+            <div class="col-md-6">
+              <h6 class="fw-bold border-bottom pb-1">Tình trạng xử lý</h6>
+              <table class="table table-sm table-borderless">
+                <tr><td class="text-muted" style="width: 130px;">Mức ưu tiên:</td><td><span class="badge priority-urgent">Khẩn cấp</span></td></tr>
+                <tr><td class="text-muted">Trạng thái:</td><td><span class="badge-status badge-ticket-active"><span class="badge-status-dot"></span>Đang sửa chữa</span></td></tr>
+                <tr><td class="text-muted">Đơn vị sửa:</td><td>Panasonic VN</td></tr>
+                <tr><td class="text-muted">Chi phí ước tính:</td><td><strong>1.800.000 VNĐ</strong></td></tr>
+              </table>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 bg-light rounded border">
+                <div class="fw-bold mb-1" style="font-size: 0.85rem;">Mô tả hư hỏng:</div>
+                <div style="font-size: 0.85rem;" class="text-secondary">
+                  Bóng đèn bị mờ nghiêm trọng, quạt tản nhiệt phát tiếng hú và tự động tắt ngắt nguồn sau 10 phút sử dụng trong giờ dạy của ThS. Đỗ Hoàng Nam.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="mockToast" class="toast align-items-center border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-white border-bottom">
+        <i id="mockToastIcon" class="bi bi-check-circle-fill text-success me-2"></i>
+        <strong id="mockToastTitle" class="me-auto text-dark">Thông báo</strong>
+        <small class="text-muted">Vừa xong</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div id="mockToastBody" class="toast-body bg-white text-secondary" style="font-size: 0.88rem;">
+        Chưa có thay đổi được lưu.
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App JS dùng chung -->
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

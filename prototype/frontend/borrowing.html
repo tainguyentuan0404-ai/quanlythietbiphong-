@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Mượn Trả Thiết Bị - LabDevice Hub</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Style dùng chung -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+          <i class="bi bi-cpu"></i>
+        </div>
+        <div>
+          <div class="sidebar-title">LabDevice Hub</div>
+          <div class="sidebar-subtitle">Quản lý phòng thực hành</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Hệ thống</div>
+        <a href="index.html" class="sidebar-link">
+          <i class="bi bi-speedometer2"></i>
+          <span>Tổng quan</span>
+        </a>
+
+        <div class="nav-section-title">Phân hệ nghiệp vụ</div>
+        <a href="equipment.html" class="sidebar-link">
+          <i class="bi bi-pc-display-horizontal"></i>
+          <span>Thiết bị & Kiểm kê</span>
+        </a>
+        <a href="borrowing.html" class="sidebar-link active">
+          <i class="bi bi-journal-arrow-up"></i>
+          <span>Mượn trả thiết bị</span>
+        </a>
+        <a href="maintenance.html" class="sidebar-link">
+          <i class="bi bi-tools"></i>
+          <span>Báo hỏng & Bảo trì</span>
+        </a>
+
+      </nav>
+
+
+    </aside>
+
+    <!-- Backdrop cho mobile -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Vùng nội dung chính -->
+    <div class="app-main">
+      <!-- Navbar -->
+      <header class="app-navbar">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Mượn trả thiết bị</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+<div class="navbar-user-badge"><div class="user-avatar"><i class="bi bi-person"></i></div><div class="d-none d-sm-block">Quản trị viên</div></div>
+        </div>
+      </header>
+
+      <!-- Nội dung trang -->
+      <main class="page-container">
+        <!-- Header tiêu đề -->
+        <div class="page-header-box d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <div>
+            <h1 class="page-title">Mượn trả thiết bị</h1>
+            <p class="page-subtitle mb-0">Theo dõi quy trình đăng ký mượn, xét duyệt, bàn giao và hoàn trả thiết bị</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createBorrowModal">
+              <i class="bi bi-plus-lg me-1"></i> Đăng ký mượn mới
+            </button>
+          </div>
+        </div>
+
+        <!-- Khối thống kê KPI -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon info">
+                <i class="bi bi-files"></i>
+              </div>
+              <div>
+                <div class="stat-value">45</div>
+                <div class="stat-label">Tổng lượt mượn (Tháng)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon warning">
+                <i class="bi bi-hourglass-split"></i>
+              </div>
+              <div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Chờ xét duyệt</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon primary">
+                <i class="bi bi-person-walking"></i>
+              </div>
+              <div>
+                <div class="stat-value">18</div>
+                <div class="stat-label">Đang mượn hợp lệ</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon danger">
+                <i class="bi bi-clock-history"></i>
+              </div>
+              <div>
+                <div class="stat-value">2</div>
+                <div class="stat-label">Quá hạn cần thu hồi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng danh sách phiếu mượn trả -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <div class="d-flex align-items-center gap-2">
+              <h2 class="content-card-title">Danh sách phiếu mượn thiết bị</h2>
+              <span class="badge bg-light text-secondary border" id="itemCountBadge">8 / 8</span>
+            </div>
+          </div>
+
+          <div class="content-card-body">
+            <!-- Bộ lọc và tìm kiếm phẳng gọn -->
+            <div class="table-toolbar">
+              <div class="row g-2 align-items-center">
+                <div class="col-12 col-md-5">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" id="tableSearchInput" class="form-control" placeholder="Tìm theo mã phiếu (PM-xxx), MSSV, tên người mượn...">
+                  </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                  <select class="form-select form-select-sm table-filter-select" data-filter-field="status">
+                    <option value="all">Tất cả trạng thái phiếu</option>
+                    <option value="pending">Chờ xét duyệt</option>
+                    <option value="approved">Đã duyệt (Chờ nhận)</option>
+                    <option value="active">Đang mượn</option>
+                    <option value="returned">Đã hoàn trả</option>
+                    <option value="overdue">Quá hạn</option>
+                    <option value="rejected">Đã từ chối</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2">
+                  <select class="form-select form-select-sm table-filter-select" data-filter-field="user-type">
+                    <option value="all">Tất cả đối tượng</option>
+                    <option value="sv">Sinh viên</option>
+                    <option value="gv">Giảng viên / NCKH</option>
+                  </select>
+                </div>
+
+                <div class="col-12 col-md-2 text-end">
+                  <button class="btn btn-outline-secondary btn-sm w-100" id="resetFilterBtn">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>Đặt lại
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table Responsive -->
+            <div class="table-responsive">
+              <table class="table custom-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">STT</th>
+                    <th>Mã phiếu</th>
+                    <th>Người mượn</th>
+                    <th>Thiết bị</th>
+                    <th>Ngày mượn</th>
+                    <th>Hạn trả</th>
+                    <th>Trạng thái phiếu</th>
+                    <th>Biên bản giao nhận</th>
+                    <th class="text-end table-actions-column">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dòng 1: Chờ duyệt -->
+                  <tr data-search-row="PM-2026-101 SV Nguyễn Văn An 2011001 CNTT pending sv" data-filter-status="pending" data-filter-user-type="sv">
+                    <td>1</td>
+                    <td><strong class="text-primary">PM-2026-101</strong></td>
+                    <td>
+                      <div class="fw-semibold">Nguyễn Văn An</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">MSSV: 2011001 • Lớp 20T1</div>
+                    </td>
+                    <td>
+                      <div>TB-2026-001</div>
+                      <small class="text-muted">Máy trạm Dell 3660</small>
+                    </td>
+                    <td>14/10/2026 (13:30)</td>
+                    <td>14/10/2026 (17:00)</td>
+                    <td>
+                      <span class="badge-status badge-ticket-pending">
+                        <span class="badge-status-dot"></span>Chờ duyệt
+                      </span>
+                    </td>
+                    <td><span class="text-muted fst-italic">Chưa bàn giao</span></td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewBorrowDetailModal" title="Xem chi tiết" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-success" data-mock-action-btn="approve" data-mock-id="PM-2026-101" title="Duyệt phiếu">
+                          <i class="bi bi-check-lg"></i> Duyệt
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 2: Đang mượn hợp lệ -->
+                  <tr data-search-row="PM-2026-102 SV Lê Thị Bình 2011002 Điện tử active sv" data-filter-status="active" data-filter-user-type="sv">
+                    <td>2</td>
+                    <td><strong class="text-primary">PM-2026-102</strong></td>
+                    <td>
+                      <div class="fw-semibold">Lê Thị Bình</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">MSSV: 2011002 • Lớp 20DT2</div>
+                    </td>
+                    <td>
+                      <div>TB-2026-002</div>
+                      <small class="text-muted">Dao động ký Tektronix</small>
+                    </td>
+                    <td>12/10/2026</td>
+                    <td>15/10/2026</td>
+                    <td>
+                      <span class="badge-status badge-ticket-active">
+                        <span class="badge-status-dot"></span>Đang mượn
+                      </span>
+                    </td>
+                    <td><span class="text-success"><i class="bi bi-check2 me-1"></i>Đã ký bàn giao</span></td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewBorrowDetailModal" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmReturnModal" title="Nhận trả">
+                          <i class="bi bi-box-arrow-in-down"></i> Trả
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 3: Quá hạn -->
+                  <tr data-search-row="PM-2026-103 SV Trần Quốc Tuấn 2011003 Viễn thông overdue sv" data-filter-status="overdue" data-filter-user-type="sv">
+                    <td>3</td>
+                    <td><strong class="text-danger">PM-2026-103</strong></td>
+                    <td>
+                      <div class="fw-semibold">Trần Quốc Tuấn</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">MSSV: 2011003 • Lớp 20VT1</div>
+                    </td>
+                    <td>
+                      <div>TB-2026-004</div>
+                      <small class="text-muted">Bộ kit STM32F4</small>
+                    </td>
+                    <td>08/10/2026</td>
+                    <td><span class="text-danger fw-bold">11/10/2026 (Trễ 3 ngày)</span></td>
+                    <td>
+                      <span class="badge-status badge-ticket-overdue">
+                        <span class="badge-status-dot"></span>Quá hạn
+                      </span>
+                    </td>
+                    <td><span class="text-success"><i class="bi bi-check2 me-1"></i>Đã ký bàn giao</span></td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-danger" onclick="showToast('Cảnh báo quá hạn', 'Đã gửi thông báo nhắc nhở thu hồi thiết bị đến SV Trần Quốc Tuấn.', 'warning')">
+                          <i class="bi bi-bell"></i>
+                        </button>
+                        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmReturnModal">
+                          <i class="bi bi-box-arrow-in-down"></i> Trả
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 4: Đã duyệt chờ nhận -->
+                  <tr data-search-row="PM-2026-104 SV Phạm Minh Đức 2011004 CNTT approved sv" data-filter-status="approved" data-filter-user-type="sv">
+                    <td>4</td>
+                    <td><strong class="text-primary">PM-2026-104</strong></td>
+                    <td>
+                      <div class="fw-semibold">Phạm Minh Đức</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">MSSV: 2011004 • Lớp 21T2</div>
+                    </td>
+                    <td>
+                      <div>TB-2026-006</div>
+                      <small class="text-muted">Nguồn DC Siglent SPD</small>
+                    </td>
+                    <td>14/10/2026</td>
+                    <td>16/10/2026</td>
+                    <td>
+                      <span class="badge-status badge-ticket-approved">
+                        <span class="badge-status-dot"></span>Đã duyệt (Chờ nhận)
+                      </span>
+                    </td>
+                    <td><span class="text-warning"><i class="bi bi-clock me-1"></i>Chờ SV đến nhận</span></td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewBorrowDetailModal" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-primary" onclick="showToast('Bàn giao thực tế', 'Đã ghi nhận bàn giao thiết bị và ký biên bản giao nhận.', 'success')">
+                          <i class="bi bi-box-arrow-up-right"></i> Bàn giao
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 5: Đã hoàn trả -->
+                  <tr data-search-row="PM-2026-105 GV Đỗ Hoàng Nam Giảng viên Lab Mạng returned gv" data-filter-status="returned" data-filter-user-type="gv">
+                    <td>5</td>
+                    <td><strong class="text-primary">PM-2026-105</strong></td>
+                    <td>
+                      <div class="fw-semibold">ThS. Đỗ Hoàng Nam</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Giảng viên Khoa CNTT</div>
+                    </td>
+                    <td>
+                      <div>TB-2026-005</div>
+                      <small class="text-muted">Switch Cisco 2960-X</small>
+                    </td>
+                    <td>05/10/2026</td>
+                    <td>10/10/2026</td>
+                    <td>
+                      <span class="badge-status badge-ticket-returned">
+                        <span class="badge-status-dot"></span>Đã trả đủ
+                      </span>
+                    </td>
+                    <td><span class="text-muted"><i class="bi bi-check-all me-1"></i>Hoàn tất đối soát</span></td>
+                    <td class="text-end table-actions-cell">
+                      <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewBorrowDetailModal">
+                        <i class="bi bi-eye"></i> Xem
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 6: Chờ duyệt -->
+                  <tr data-search-row="PM-2026-106 SV Hoàng Văn Long 2011005 CNTT pending sv" data-filter-status="pending" data-filter-user-type="sv">
+                    <td>6</td>
+                    <td><strong class="text-primary">PM-2026-106</strong></td>
+                    <td>
+                      <div class="fw-semibold">Hoàng Văn Long</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">MSSV: 2011005 • Lớp 20T3</div>
+                    </td>
+                    <td>
+                      <div>TB-2026-008</div>
+                      <small class="text-muted">Router Cisco 4321</small>
+                    </td>
+                    <td>15/10/2026</td>
+                    <td>18/10/2026</td>
+                    <td>
+                      <span class="badge-status badge-ticket-pending">
+                        <span class="badge-status-dot"></span>Chờ duyệt
+                      </span>
+                    </td>
+                    <td><span class="text-muted fst-italic">Chưa bàn giao</span></td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewBorrowDetailModal" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-success" data-mock-action-btn="approve" data-mock-id="PM-2026-106">
+                          <i class="bi bi-check-lg"></i> Duyệt
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 7: Đang mượn -->
+                  <tr data-search-row="PM-2026-107 SV Vũ Hải Yến 2011006 Điện tử active sv" data-filter-status="active" data-filter-user-type="sv">
+                    <td>7</td>
+                    <td><strong class="text-primary">PM-2026-107</strong></td>
+                    <td>
+                      <div class="fw-semibold">Vũ Hải Yến</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">MSSV: 2011006 • Lớp 21DT1</div>
+                    </td>
+                    <td>
+                      <div>TB-2026-006</div>
+                      <small class="text-muted">Nguồn DC Siglent SPD</small>
+                    </td>
+                    <td>13/10/2026</td>
+                    <td>16/10/2026</td>
+                    <td>
+                      <span class="badge-status badge-ticket-active">
+                        <span class="badge-status-dot"></span>Đang mượn
+                      </span>
+                    </td>
+                    <td><span class="text-success"><i class="bi bi-check2 me-1"></i>Đã ký bàn giao</span></td>
+                    <td class="text-end table-actions-cell">
+                      <div class="table-actions">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewBorrowDetailModal" aria-label="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmReturnModal">
+                          <i class="bi bi-box-arrow-in-down"></i> Trả
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 8: Đã từ chối -->
+                  <tr data-search-row="PM-2026-108 SV Đặng Thị Mai 2011007 CNTT rejected sv" data-filter-status="rejected" data-filter-user-type="sv">
+                    <td>8</td>
+                    <td><strong class="text-secondary">PM-2026-108</strong></td>
+                    <td>
+                      <div class="fw-semibold">Đặng Thị Mai</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">MSSV: 2011007 • Lớp 20T1</div>
+                    </td>
+                    <td>
+                      <div>TB-2026-003</div>
+                      <small class="text-muted">Máy chiếu Panasonic</small>
+                    </td>
+                    <td>11/10/2026</td>
+                    <td>11/10/2026</td>
+                    <td>
+                      <span class="badge-status badge-ticket-rejected">
+                        <span class="badge-status-dot"></span>Đã từ chối
+                      </span>
+                    </td>
+                    <td><span class="text-muted">Thiết bị đang bảo trì</span></td>
+                    <td class="text-end table-actions-cell">
+                      <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#viewBorrowDetailModal">
+                        <i class="bi bi-eye"></i> Xem lý do
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Trạng thái không có kết quả -->
+                  <tr id="emptyStateRow" style="display: none;">
+                    <td colspan="9">
+                      <div class="empty-state">
+                        <div class="empty-state-icon"><i class="bi bi-inbox"></i></div>
+                        <h6>Không có phiếu mượn phù hợp</h6>
+                        <p class="mb-2">Thử điều chỉnh lại bộ lọc trạng thái hoặc từ khóa tìm kiếm.</p>
+                        <button class="btn btn-sm btn-outline-primary" onclick="document.getElementById('resetFilterBtn').click()">
+                          Đặt lại bộ lọc
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Phân trang minh họa -->
+            <div class="d-flex align-items-center justify-content-between mt-3 flex-wrap gap-2">
+              <div class="text-muted" style="font-size: 0.85rem;">
+                Hiển thị trang 1 trên 1 (Dữ liệu mẫu 8 phiếu)
+              </div>
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL: Tạo phiếu đăng ký mượn mới -->
+  <div class="modal fade" id="createBorrowModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-journal-plus text-primary me-2"></i>Đăng ký mượn thiết bị mới
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form data-mock-form="Phiếu mượn" data-mock-action="Đăng ký mượn" novalidate>
+          <div class="modal-body">
+            <div class="alert alert-info py-2" style="font-size: 0.82rem;">
+              <i class="bi bi-info-circle me-1"></i> Yêu cầu mượn cần được xét duyệt trước khi bàn giao thiết bị.
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Mã số sinh viên / Mã cán bộ<span class="form-required">*</span></label>
+                <input type="text" class="form-control" placeholder="Ví dụ: 2011008" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Họ và tên người mượn<span class="form-required">*</span></label>
+                <input type="text" class="form-control" placeholder="Họ và tên đầy đủ" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Số điện thoại liên hệ<span class="form-required">*</span></label>
+                <input type="tel" class="form-control" placeholder="090xxxxxxxx" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Lớp / Bộ môn / Khoa<span class="form-required">*</span></label>
+                <input type="text" class="form-control" placeholder="Ví dụ: Lớp 20T1 - Khoa CNTT" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Thiết bị cần mượn<span class="form-required">*</span></label>
+                <select class="form-select" required>
+                  <option value="">-- Chọn thiết bị đang sẵn sàng --</option>
+                  <option value="TB-2026-001">TB-2026-001 — Máy trạm Dell Precision (Lab 301)</option>
+                  <option value="TB-2026-004">TB-2026-004 — Bộ kit STM32F4 Discovery (Lab IoT)</option>
+                  <option value="TB-2026-005">TB-2026-005 — Switch Cisco Catalyst 2960-X (Lab 302)</option>
+                  <option value="TB-2026-008">TB-2026-008 — Router Cisco ISR 4321 (Lab 302)</option>
+                </select>
+                <div class="form-hint text-success"><i class="bi bi-check-circle me-1"></i>Chỉ liệt kê thiết bị có trạng thái sẵn sàng (Khóa các thiết bị đang hỏng/bảo trì)</div>
+              </div>
+
+              <div class="col-md-3">
+                <label class="form-label">Thời điểm mượn<span class="form-required">*</span></label>
+                <input type="datetime-local" class="form-control" required>
+              </div>
+
+              <div class="col-md-3">
+                <label class="form-label">Thời điểm hẹn trả<span class="form-required">*</span></label>
+                <input type="datetime-local" class="form-control" required>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Mục đích sử dụng & Môn học liên quan<span class="form-required">*</span></label>
+                <textarea class="form-control" rows="2" placeholder="Ví dụ: Thực hành môn Mạng máy tính / Làm đồ án tốt nghiệp..." required></textarea>
+              </div>
+
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="borrowTermsCheck" required>
+                  <label class="form-check-label text-muted" for="borrowTermsCheck" style="font-size: 0.85rem;">
+                    Cam kết giữ gìn thiết bị nguyên vẹn, bàn giao đúng hạn và chịu trách nhiệm nếu xảy ra mất mát, hư hỏng.
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-send me-1"></i>Gửi phiếu đăng ký
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Xem chi tiết phiếu mượn -->
+  <div class="modal fade" id="viewBorrowDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-file-earmark-text text-primary me-2"></i>Chi tiết phiếu mượn PM-2026-101
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <h6 class="fw-bold border-bottom pb-1">Thông tin người mượn</h6>
+              <table class="table table-sm table-borderless">
+                <tr><td class="text-muted" style="width: 120px;">Họ tên:</td><td><strong>Nguyễn Văn An</strong></td></tr>
+                <tr><td class="text-muted">MSSV:</td><td>2011001</td></tr>
+                <tr><td class="text-muted">Lớp / Khoa:</td><td>Lớp 20T1 - Khoa CNTT</td></tr>
+                <tr><td class="text-muted">Liên hệ:</td><td>0901234567 • an.nv@student.edu.vn</td></tr>
+              </table>
+            </div>
+
+            <div class="col-md-6">
+              <h6 class="fw-bold border-bottom pb-1">Thiết bị & Thời gian</h6>
+              <table class="table table-sm table-borderless">
+                <tr><td class="text-muted" style="width: 120px;">Thiết bị:</td><td><strong>TB-2026-001 (Dell 3660)</strong></td></tr>
+                <tr><td class="text-muted">Thời điểm mượn:</td><td>14/10/2026 (13:30)</td></tr>
+                <tr><td class="text-muted">Hạn trả:</td><td>14/10/2026 (17:00)</td></tr>
+                <tr><td class="text-muted">Trạng thái:</td><td><span class="badge-status badge-ticket-pending"><span class="badge-status-dot"></span>Chờ xét duyệt</span></td></tr>
+              </table>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 bg-light rounded border">
+                <div class="fw-bold mb-1" style="font-size: 0.85rem;">Mục đích mượn:</div>
+                <div style="font-size: 0.85rem;" class="text-secondary">
+                  Thực hành cấu hình huấn luyện mô hình môn Trí tuệ nhân tạo, buổi chiều thứ Tư.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-success" data-mock-action-btn="approve" data-mock-id="PM-2026-101" data-bs-dismiss="modal">
+            <i class="bi bi-check2-circle me-1"></i>Phê duyệt phiếu này
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Xác nhận trả thiết bị -->
+  <div class="modal fade" id="confirmReturnModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-box-arrow-in-down text-success me-2"></i>Xác nhận trả thiết bị
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form data-mock-form="Phiếu trả" data-mock-action="Xác nhận trả" novalidate>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Tình trạng thiết bị khi nhận lại<span class="form-required">*</span></label>
+              <select class="form-select" required>
+                <option value="good" selected>Nguyên vẹn, hoạt động bình thường</option>
+                <option value="degraded">Có trầy xước / xuống cấp nhẹ</option>
+                <option value="damaged">Hư hỏng / Lỗi linh kiện (Cần lập biên bản báo hỏng)</option>
+                <option value="lost">Mất phụ kiện kèm theo</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Ghi chú đối soát</label>
+              <textarea class="form-control" rows="2" placeholder="Ghi chú về phụ kiện, dây cáp bàn giao lại..."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-check-all me-1"></i>Hoàn tất nhận trả
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="mockToast" class="toast align-items-center border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-white border-bottom">
+        <i id="mockToastIcon" class="bi bi-check-circle-fill text-success me-2"></i>
+        <strong id="mockToastTitle" class="me-auto text-dark">Thông báo</strong>
+        <small class="text-muted">Vừa xong</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div id="mockToastBody" class="toast-body bg-white text-secondary" style="font-size: 0.88rem;">
+        Chưa có thay đổi được lưu.
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App JS dùng chung -->
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

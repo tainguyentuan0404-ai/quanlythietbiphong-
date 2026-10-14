@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Thiết Bị & Kiểm Kê - LabDevice Hub</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Style dùng chung -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+          <i class="bi bi-cpu"></i>
+        </div>
+        <div>
+          <div class="sidebar-title">LabDevice Hub</div>
+          <div class="sidebar-subtitle">Quản lý phòng thực hành</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Hệ thống</div>
+        <a href="index.html" class="sidebar-link">
+          <i class="bi bi-speedometer2"></i>
+          <span>Tổng quan</span>
+        </a>
+
+        <div class="nav-section-title">Phân hệ nghiệp vụ</div>
+        <a href="equipment.html" class="sidebar-link active">
+          <i class="bi bi-pc-display-horizontal"></i>
+          <span>Thiết bị & Kiểm kê</span>
+        </a>
+        <a href="borrowing.html" class="sidebar-link">
+          <i class="bi bi-journal-arrow-up"></i>
+          <span>Mượn trả thiết bị</span>
+        </a>
+        <a href="maintenance.html" class="sidebar-link">
+          <i class="bi bi-tools"></i>
+          <span>Báo hỏng & Bảo trì</span>
+        </a>
+
+      </nav>
+
+
+    </aside>
+
+    <!-- Backdrop cho mobile -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Vùng nội dung chính -->
+    <div class="app-main">
+      <!-- Navbar -->
+      <header class="app-navbar">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Thiết bị & Kiểm kê</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+<div class="navbar-user-badge"><div class="user-avatar"><i class="bi bi-person"></i></div><div class="d-none d-sm-block">Quản trị viên</div></div>
+        </div>
+      </header>
+
+      <!-- Nội dung trang -->
+      <main class="page-container">
+        <!-- Header tiêu đề -->
+        <div class="page-header-box d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <div>
+            <h1 class="page-title">Thiết bị & Kiểm kê</h1>
+            <p class="page-subtitle mb-0">Theo dõi thông tin tài sản, tình trạng và đối soát mã QR phòng thực hành</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#qrScanModal">
+              <i class="bi bi-qr-code-scan me-1"></i> Quét QR kiểm kê
+            </button>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEquipmentModal">
+              <i class="bi bi-plus-lg me-1"></i> Thêm thiết bị mới
+            </button>
+          </div>
+        </div>
+
+        <!-- Khối thống kê KPI -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon primary">
+                <i class="bi bi-boxes"></i>
+              </div>
+              <div>
+                <div class="stat-value">128</div>
+                <div class="stat-label">Tổng quản lý (8 mẫu)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon success">
+                <i class="bi bi-check-circle"></i>
+              </div>
+              <div>
+                <div class="stat-value">94</div>
+                <div class="stat-label">Sẵn sàng (73%)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon warning">
+                <i class="bi bi-arrow-left-right"></i>
+              </div>
+              <div>
+                <div class="stat-value">22</div>
+                <div class="stat-label">Đang mượn (17%)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon danger">
+                <i class="bi bi-exclamation-octagon"></i>
+              </div>
+              <div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Bảo trì / hỏng (10%)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng danh sách thiết bị -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <div class="d-flex align-items-center gap-2">
+              <h2 class="content-card-title">Danh sách thiết bị phòng thực hành</h2>
+              <span class="badge bg-light text-secondary border" id="itemCountBadge">8 / 8</span>
+            </div>
+          </div>
+
+          <div class="content-card-body">
+            <!-- Bộ lọc và tìm kiếm -->
+            <div class="table-toolbar">
+              <div class="row g-2 align-items-center">
+                <div class="col-12 col-md-4">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" id="tableSearchInput" class="form-control" placeholder="Tìm theo mã (TB-xxx) hoặc tên...">
+                  </div>
+                </div>
+
+                <div class="col-6 col-md-2">
+                  <select class="form-select form-select-sm table-filter-select" data-filter-field="type">
+                    <option value="all">Tất cả loại TB</option>
+                    <option value="may-tinh">Máy tính để bàn</option>
+                    <option value="dao-dong-ky">Dao động ký</option>
+                    <option value="may-chieu">Máy chiếu</option>
+                    <option value="kit-iot">Bộ kit IoT</option>
+                    <option value="cisco">Router / Switch</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2">
+                  <select class="form-select form-select-sm table-filter-select" data-filter-field="room">
+                    <option value="all">Tất cả phòng Lab</option>
+                    <option value="lab-301">Lab 301 (Máy tính)</option>
+                    <option value="lab-302">Lab 302 (Mạng)</option>
+                    <option value="xuong-dt">Xưởng Điện tử</option>
+                    <option value="lab-iot">Lab IoT & Viễn thông</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2">
+                  <select class="form-select form-select-sm table-filter-select" data-filter-field="status">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="available">Sẵn sàng</option>
+                    <option value="borrowed">Đang mượn</option>
+                    <option value="maintenance">Đang bảo trì</option>
+                    <option value="locked">Tạm khóa</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2 text-end">
+                  <button class="btn btn-outline-secondary btn-sm w-100" id="resetFilterBtn">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>Đặt lại
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table Responsive -->
+            <div class="table-responsive">
+              <table class="table custom-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">STT</th>
+                    <th>Mã thiết bị</th>
+                    <th>Tên thiết bị</th>
+                    <th>Loại</th>
+                    <th>Phòng / vị trí</th>
+                    <th>Tình trạng</th>
+                    <th>Khả dụng</th>
+                    <th>Mã QR</th>
+                    <th class="text-end" style="width: 140px;">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dòng 1 -->
+                  <tr data-search-row="TB-2026-001 Máy trạm Dell Precision 3660 may-tinh lab-301" data-filter-type="may-tinh" data-filter-room="lab-301" data-filter-status="available">
+                    <td>1</td>
+                    <td><strong class="text-primary">TB-2026-001</strong></td>
+                    <td>
+                      <div class="fw-semibold">Máy trạm Dell Precision 3660</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Intel Core i7-13700, 32GB RAM, RTX 3060</div>
+                    </td>
+                    <td>Máy tính để bàn</td>
+                    <td>Lab 301 <span class="text-muted">(Bàn B-01)</span></td>
+                    <td>
+                      <span class="badge-status badge-condition-good">
+                        <span class="badge-status-dot"></span>Hoạt động tốt (98%)
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge-status badge-available">
+                        <span class="badge-status-dot"></span>Sẵn sàng
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#viewDetailModal" title="Xem mã QR">
+                        <i class="bi bi-qr-code"></i>
+                      </button>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewDetailModal" title="Xem chi tiết">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editEquipmentModal" title="Chỉnh sửa">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" data-mock-action-btn="lock" data-mock-id="TB-2026-001" title="Khóa">
+                          <i class="bi bi-lock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 2 -->
+                  <tr data-search-row="TB-2026-002 Dao động ký số Tektronix TBS1102B dao-dong-ky xuong-dt" data-filter-type="dao-dong-ky" data-filter-room="xuong-dt" data-filter-status="borrowed">
+                    <td>2</td>
+                    <td><strong class="text-primary">TB-2026-002</strong></td>
+                    <td>
+                      <div class="fw-semibold">Dao động ký số Tektronix TBS1102B</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Băng thông 100MHz, 2 kênh, lấy mẫu 2GS/s</div>
+                    </td>
+                    <td>Dao động ký</td>
+                    <td>Xưởng Điện tử <span class="text-muted">(Tủ E-03)</span></td>
+                    <td>
+                      <span class="badge-status badge-condition-good">
+                        <span class="badge-status-dot"></span>Hoạt động tốt
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge-status badge-borrowed">
+                        <span class="badge-status-dot"></span>Đang cho mượn
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                        <i class="bi bi-qr-code"></i>
+                      </button>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" data-mock-action-btn="lock" data-mock-id="TB-2026-002">
+                          <i class="bi bi-lock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 3 -->
+                  <tr data-search-row="TB-2026-003 Máy chiếu Panasonic PT-LB386 may-chieu lab-301" data-filter-type="may-chieu" data-filter-room="lab-301" data-filter-status="maintenance">
+                    <td>3</td>
+                    <td><strong class="text-primary">TB-2026-003</strong></td>
+                    <td>
+                      <div class="fw-semibold">Máy chiếu Panasonic PT-LB386</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Độ sáng 3800 ANSI Lumens, bóng đèn suy giảm</div>
+                    </td>
+                    <td>Máy chiếu</td>
+                    <td>Lab 301 <span class="text-muted">(Trần phòng)</span></td>
+                    <td>
+                      <span class="badge-status badge-condition-degraded">
+                        <span class="badge-status-dot"></span>Xuống cấp (Đèn mờ)
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge-status badge-maintenance">
+                        <span class="badge-status-dot"></span>Đang bảo trì
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                        <i class="bi bi-qr-code"></i>
+                      </button>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" data-mock-action-btn="lock" data-mock-id="TB-2026-003">
+                          <i class="bi bi-lock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 4 -->
+                  <tr data-search-row="TB-2026-004 Bộ kit thực hành STM32F4 Discovery kit-iot lab-iot" data-filter-type="kit-iot" data-filter-room="lab-iot" data-filter-status="available">
+                    <td>4</td>
+                    <td><strong class="text-primary">TB-2026-004</strong></td>
+                    <td>
+                      <div class="fw-semibold">Bộ kit STM32F4 Discovery</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Board ARM Cortex-M4 + Cáp nạp ST-Link</div>
+                    </td>
+                    <td>Bộ kit IoT</td>
+                    <td>Lab IoT <span class="text-muted">(Hộp K-12)</span></td>
+                    <td>
+                      <span class="badge-status badge-condition-good">
+                        <span class="badge-status-dot"></span>Hoạt động tốt
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge-status badge-available">
+                        <span class="badge-status-dot"></span>Sẵn sàng
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                        <i class="bi bi-qr-code"></i>
+                      </button>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" data-mock-action-btn="lock" data-mock-id="TB-2026-004">
+                          <i class="bi bi-lock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 5 -->
+                  <tr data-search-row="TB-2026-005 Switch Cisco Catalyst 2960-X 24 port cisco lab-302" data-filter-type="cisco" data-filter-room="lab-302" data-filter-status="available">
+                    <td>5</td>
+                    <td><strong class="text-primary">TB-2026-005</strong></td>
+                    <td>
+                      <div class="fw-semibold">Switch Cisco Catalyst 2960-X 24 Ports</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Gigabit Ethernet, PoE+, Rack 19 inch</div>
+                    </td>
+                    <td>Router / Switch</td>
+                    <td>Lab 302 <span class="text-muted">(Rack R-01)</span></td>
+                    <td>
+                      <span class="badge-status badge-condition-good">
+                        <span class="badge-status-dot"></span>Hoạt động tốt
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge-status badge-available">
+                        <span class="badge-status-dot"></span>Sẵn sàng
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                        <i class="bi bi-qr-code"></i>
+                      </button>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" data-mock-action-btn="lock" data-mock-id="TB-2026-005">
+                          <i class="bi bi-lock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 6 -->
+                  <tr data-search-row="TB-2026-006 Nguồn DC lập trình Siglent SPD3303X dao-dong-ky xuong-dt" data-filter-type="dao-dong-ky" data-filter-room="xuong-dt" data-filter-status="borrowed">
+                    <td>6</td>
+                    <td><strong class="text-primary">TB-2026-006</strong></td>
+                    <td>
+                      <div class="fw-semibold">Nguồn một chiều DC Siglent SPD3303X</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">3 kênh ngõ ra, công suất 220W</div>
+                    </td>
+                    <td>Dao động ký / Nguồn</td>
+                    <td>Xưởng Điện tử <span class="text-muted">(Bàn T-04)</span></td>
+                    <td>
+                      <span class="badge-status badge-condition-good">
+                        <span class="badge-status-dot"></span>Hoạt động tốt
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge-status badge-borrowed">
+                        <span class="badge-status-dot"></span>Đang cho mượn
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                        <i class="bi bi-qr-code"></i>
+                      </button>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" data-mock-action-btn="lock" data-mock-id="TB-2026-006">
+                          <i class="bi bi-lock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 7 -->
+                  <tr data-search-row="TB-2026-007 Máy trạm HP Z2 G9 may-tinh lab-301" data-filter-type="may-tinh" data-filter-room="lab-301" data-filter-status="locked">
+                    <td>7</td>
+                    <td><strong class="text-primary">TB-2026-007</strong></td>
+                    <td>
+                      <div class="fw-semibold">Máy trạm HP Z2 Tower G9</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">Lỗi nguồn khởi động không lên, chờ linh kiện</div>
+                    </td>
+                    <td>Máy tính để bàn</td>
+                    <td>Lab 301 <span class="text-muted">(Kho tạm)</span></td>
+                    <td>
+                      <span class="badge-status badge-condition-broken">
+                        <span class="badge-status-dot"></span>Hỏng nguồn
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge-status badge-locked">
+                        <span class="badge-status-dot"></span>Tạm khóa
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                        <i class="bi bi-qr-code"></i>
+                      </button>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" data-mock-action-btn="lock" data-mock-id="TB-2026-007">
+                          <i class="bi bi-unlock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Dòng 8 -->
+                  <tr data-search-row="TB-2026-008 Router Cisco ISR 4321 cisco lab-302" data-filter-type="cisco" data-filter-room="lab-302" data-filter-status="available">
+                    <td>8</td>
+                    <td><strong class="text-primary">TB-2026-008</strong></td>
+                    <td>
+                      <div class="fw-semibold">Router Cisco ISR 4321/K9</div>
+                      <div class="text-muted" style="font-size: 0.75rem;">2 GE, 2 NIM slots, 1 ISC slot, 4GB Flash</div>
+                    </td>
+                    <td>Router / Switch</td>
+                    <td>Lab 302 <span class="text-muted">(Rack R-02)</span></td>
+                    <td>
+                      <span class="badge-status badge-condition-good">
+                        <span class="badge-status-dot"></span>Hoạt động tốt
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge-status badge-available">
+                        <span class="badge-status-dot"></span>Sẵn sàng
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                        <i class="bi bi-qr-code"></i>
+                      </button>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewDetailModal">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" data-mock-action-btn="lock" data-mock-id="TB-2026-008">
+                          <i class="bi bi-lock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Trạng thái không có kết quả -->
+                  <tr id="emptyStateRow" style="display: none;">
+                    <td colspan="9">
+                      <div class="empty-state">
+                        <div class="empty-state-icon"><i class="bi bi-search"></i></div>
+                        <h6>Không tìm thấy thiết bị phù hợp</h6>
+                        <p class="mb-2">Thử điều chỉnh từ khóa tìm kiếm hoặc đặt lại các bộ lọc thuộc tính.</p>
+                        <button class="btn btn-sm btn-outline-primary" onclick="document.getElementById('resetFilterBtn').click()">
+                          Đặt lại bộ lọc
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Phân trang minh họa -->
+            <div class="d-flex align-items-center justify-content-between mt-3 flex-wrap gap-2">
+              <div class="text-muted" style="font-size: 0.85rem;">
+                Hiển thị trang 1 trên 1 (Dữ liệu mẫu 8 bản ghi)
+              </div>
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL 1: Thêm thiết bị mới -->
+  <div class="modal fade" id="addEquipmentModal" tabindex="-1" aria-labelledby="addEquipmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEquipmentModalLabel">
+            <i class="bi bi-plus-circle text-primary me-2"></i>Thêm thiết bị mới
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form data-mock-form="Thiết bị" data-mock-action="Thêm mới" novalidate>
+          <div class="modal-body">
+            <div class="alert alert-info py-2" style="font-size: 0.82rem;">
+              <i class="bi bi-info-circle me-1"></i> Điền thông tin thiết bị. Các trường có dấu * là bắt buộc.
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Mã định danh thiết bị<span class="form-required">*</span></label>
+                <input type="text" class="form-control" placeholder="Ví dụ: TB-2026-009" required>
+                <div class="form-hint">Mã tài sản duy nhất gắn với mã QR để kiểm kê</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Tên thiết bị<span class="form-required">*</span></label>
+                <input type="text" class="form-control" placeholder="Tên thiết bị và model" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Loại thiết bị<span class="form-required">*</span></label>
+                <select class="form-select" required>
+                  <option value="">-- Chọn loại thiết bị --</option>
+                  <option value="1">Máy tính để bàn</option>
+                  <option value="2">Dao động ký</option>
+                  <option value="3">Máy chiếu</option>
+                  <option value="4">Bộ kit thực hành IoT</option>
+                  <option value="5">Router / Switch</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Phòng thực hành<span class="form-required">*</span></label>
+                <select class="form-select" required>
+                  <option value="">-- Chọn phòng quản lý --</option>
+                  <option value="1">Phòng Lab 301 (Máy tính chuyên đề)</option>
+                  <option value="2">Phòng Lab 302 (Mạng máy tính)</option>
+                  <option value="3">Xưởng Điện tử viễn thông</option>
+                  <option value="4">Phòng Lab IoT</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Vị trí cụ thể trong phòng</label>
+                <input type="text" class="form-control" placeholder="Ví dụ: Bàn B-04, Tủ thiết bị 2">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Tình trạng vật lý ban đầu<span class="form-required">*</span></label>
+                <select class="form-select" required>
+                  <option value="good">Hoạt động tốt (Mới 100%)</option>
+                  <option value="degraded">Xuống cấp nhẹ</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Thông số kỹ thuật & Ghi chú</label>
+                <textarea class="form-control" rows="3" placeholder="Ghi chú cấu hình chi tiết, số seri linh kiện..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-check-lg me-1"></i>Lưu thiết bị
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Xem chi tiết & Lịch sử & QR -->
+  <div class="modal fade" id="viewDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-info-circle text-primary me-2"></i>Chi tiết thiết bị TB-2026-001
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <table class="table table-sm table-borderless">
+                <tr>
+                  <td class="text-muted" style="width: 140px;">Tên thiết bị:</td>
+                  <td><strong>Máy trạm Dell Precision 3660</strong></td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Mã định danh:</td>
+                  <td><span class="badge bg-primary">TB-2026-001</span></td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Loại thiết bị:</td>
+                  <td>Máy tính để bàn cao cấp</td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Vị trí hiện tại:</td>
+                  <td>Phòng Lab 301 - Bàn B-01</td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Tình trạng vật lý:</td>
+                  <td><span class="badge-status badge-condition-good"><span class="badge-status-dot"></span>Hoạt động tốt (98%)</span></td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Trạng thái khả dụng:</td>
+                  <td><span class="badge-status badge-available"><span class="badge-status-dot"></span>Sẵn sàng cho mượn</span></td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Cấu hình:</td>
+                  <td>CPU Intel Core i7-13700, 32GB RAM DDR5, 1TB NVMe, VGA NVIDIA RTX 3060 12GB</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="col-md-4 text-center border-start">
+              <div class="p-3 bg-light rounded d-inline-block border">
+                <!-- Mã QR giả lập bằng SVG -->
+                <svg width="130" height="130" viewBox="0 0 100 100">
+                  <rect width="100" height="100" fill="#ffffff"/>
+                  <rect x="5" y="5" width="25" height="25" fill="#0f172a"/>
+                  <rect x="10" y="10" width="15" height="15" fill="#ffffff"/>
+                  <rect x="13" y="13" width="9" height="9" fill="#0f172a"/>
+
+                  <rect x="70" y="5" width="25" height="25" fill="#0f172a"/>
+                  <rect x="75" y="10" width="15" height="15" fill="#ffffff"/>
+                  <rect x="78" y="13" width="9" height="9" fill="#0f172a"/>
+
+                  <rect x="5" y="70" width="25" height="25" fill="#0f172a"/>
+                  <rect x="10" y="75" width="15" height="15" fill="#ffffff"/>
+                  <rect x="13" y="78" width="9" height="9" fill="#0f172a"/>
+
+                  <rect x="35" y="10" width="5" height="15" fill="#0f172a"/>
+                  <rect x="45" y="15" width="15" height="5" fill="#0f172a"/>
+                  <rect x="40" y="40" width="20" height="20" fill="#0f172a"/>
+                  <rect x="45" y="45" width="10" height="10" fill="#ffffff"/>
+                  <rect x="70" y="40" width="10" height="15" fill="#0f172a"/>
+                  <rect x="85" y="50" width="10" height="5" fill="#0f172a"/>
+                  <rect x="10" y="40" width="15" height="10" fill="#0f172a"/>
+                  <rect x="35" y="70" width="15" height="20" fill="#0f172a"/>
+                  <rect x="60" y="75" width="25" height="15" fill="#0f172a"/>
+                </svg>
+                <div class="mt-2 text-muted fw-bold" style="font-size: 0.72rem;">QR: TB-2026-001</div>
+              </div>
+              <div class="mt-2">
+                <button class="btn btn-sm btn-outline-secondary" onclick="showToast('In mã QR', 'Chức năng in chưa được kết nối.', 'info')">
+                  <i class="bi bi-printer me-1"></i>In tem QR
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lịch sử hoạt động gần đây của thiết bị -->
+          <div class="mt-4">
+            <h6 class="fw-bold border-bottom pb-2">Nhật ký luân chuyển & Bảo trì gần đây</h6>
+            <div class="timeline" style="font-size: 0.82rem;">
+              <div class="d-flex gap-2 mb-2">
+                <div class="text-muted" style="min-width: 90px;">10/10/2026</div>
+                <div><strong>Kiểm kê định kỳ:</strong> Khang xác nhận thiết bị tại phòng Lab 301, hoạt động tốt.</div>
+              </div>
+              <div class="d-flex gap-2 mb-2">
+                <div class="text-muted" style="min-width: 90px;">02/10/2026</div>
+                <div><strong>Nhận trả:</strong> SV Nguyễn Văn A hoàn trả thiết bị nguyên vẹn sau buổi thực hành.</div>
+              </div>
+              <div class="d-flex gap-2">
+                <div class="text-muted" style="min-width: 90px;">15/09/2026</div>
+                <div><strong>Bảo trì định kỳ:</strong> Vệ sinh quạt gió tản nhiệt, tra keo tản nhiệt CPU.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Quét mã QR Kiểm kê -->
+  <div class="modal fade" id="qrScanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-qr-code-scan text-primary me-2"></i>Quét mã QR kiểm kê
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="p-4 bg-dark text-white rounded mb-3">
+            <i class="bi bi-camera fs-1 d-block mb-2 text-info"></i>
+            <div style="font-size: 0.9rem;">Camera chưa được kết nối</div>
+            <div class="text-secondary" style="font-size: 0.75rem;">Hướng camera vào tem QR dán trên thân thiết bị</div>
+          </div>
+
+          <div class="mb-3 text-start">
+            <label class="form-label">Chọn mã QR kiểm kê mẫu để thử nghiệm:</label>
+            <select class="form-select" id="mockQrSelect">
+              <option value="TB-2026-001">TB-2026-001 — Máy trạm Dell Lab 301</option>
+              <option value="TB-2026-002">TB-2026-002 — Dao động ký Tektronix Xưởng ĐT</option>
+              <option value="TB-2026-005">TB-2026-005 — Switch Cisco 2960 Lab 302</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" onclick="
+            const code = document.getElementById('mockQrSelect').value;
+            bootstrap.Modal.getInstance(document.getElementById('qrScanModal')).hide();
+            showToast('Kết quả quét QR', `Đã nhận diện thành công mã: ${code}. Vị trí và số lượng trùng khớp với cơ sở dữ liệu!`, 'success');
+          ">
+            <i class="bi bi-check2-circle me-1"></i>Xác nhận quét
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Chỉnh sửa thiết bị -->
+  <div class="modal fade" id="editEquipmentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-pencil-square text-primary me-2"></i>Chỉnh sửa thiết bị
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form data-mock-form="Thiết bị" data-mock-action="Cập nhật" novalidate>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Mã thiết bị</label>
+                <input type="text" class="form-control" value="TB-2026-001" readonly disabled>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tên thiết bị</label>
+                <input type="text" class="form-control" value="Máy trạm Dell Precision 3660" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tình trạng vật lý</label>
+                <select class="form-select">
+                  <option selected>Hoạt động tốt</option>
+                  <option>Xuống cấp</option>
+                  <option>Hỏng hóc</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Khả năng sẵn sàng</label>
+                <select class="form-select">
+                  <option selected>Sẵn sàng cho mượn</option>
+                  <option>Tạm khóa</option>
+                  <option>Bảo trì</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container cho thông báo mô phỏng -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="mockToast" class="toast align-items-center border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-white border-bottom">
+        <i id="mockToastIcon" class="bi bi-check-circle-fill text-success me-2"></i>
+        <strong id="mockToastTitle" class="me-auto text-dark">Thông báo</strong>
+        <small class="text-muted">Vừa xong</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div id="mockToastBody" class="toast-body bg-white text-secondary" style="font-size: 0.88rem;">
+        Chưa có thay đổi được lưu.
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App JS dùng chung -->
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

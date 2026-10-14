@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tổng Quan Hệ Thống - LabDevice Hub</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Style dùng chung -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+          <i class="bi bi-cpu"></i>
+        </div>
+        <div>
+          <div class="sidebar-title">LabDevice Hub</div>
+          <div class="sidebar-subtitle">Quản lý phòng thực hành</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Hệ thống</div>
+        <a href="index.html" class="sidebar-link active">
+          <i class="bi bi-speedometer2"></i>
+          <span>Tổng quan</span>
+        </a>
+
+        <div class="nav-section-title">Nghiệp vụ</div>
+        <a href="equipment.html" class="sidebar-link">
+          <i class="bi bi-pc-display-horizontal"></i>
+          <span>Thiết bị & Kiểm kê</span>
+        </a>
+        <a href="borrowing.html" class="sidebar-link">
+          <i class="bi bi-journal-arrow-up"></i>
+          <span>Mượn trả thiết bị</span>
+        </a>
+        <a href="maintenance.html" class="sidebar-link">
+          <i class="bi bi-tools"></i>
+          <span>Báo hỏng & Bảo trì</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Backdrop cho mobile -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Vùng nội dung chính -->
+    <div class="app-main">
+      <!-- Navbar -->
+      <header class="app-navbar">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Tổng quan</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <div class="navbar-user-badge">
+            <div class="user-avatar">
+              <i class="bi bi-person"></i>
+            </div>
+            <div class="d-none d-sm-block">Quản trị viên</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Nội dung trang -->
+      <main class="page-container">
+        <!-- Header tiêu đề -->
+        <div class="page-header-box d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <div>
+            <h1 class="page-title">Tổng quan phòng thực hành</h1>
+            <p class="page-subtitle mb-0">Theo dõi trạng thái thiết bị, phiếu mượn và các sự cố cần xử lý</p>
+          </div>
+          <a href="borrowing.html" class="btn btn-primary btn-sm">
+            <i class="bi bi-journal-arrow-up me-1"></i> Quản lý mượn trả
+          </a>
+        </div>
+
+        <!-- Khối thống kê KPI -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon primary">
+                <i class="bi bi-boxes"></i>
+              </div>
+              <div>
+                <div class="stat-value">128</div>
+                <div class="stat-label">Tổng thiết bị quản lý</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon success">
+                <i class="bi bi-check2-all"></i>
+              </div>
+              <div>
+                <div class="stat-value">94</div>
+                <div class="stat-label">Sẵn sàng phục vụ (73%)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon warning">
+                <i class="bi bi-person-walking"></i>
+              </div>
+              <div>
+                <div class="stat-value">22</div>
+                <div class="stat-label">Đang được mượn (17%)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+              <div class="stat-icon danger">
+                <i class="bi bi-wrench-adjustable"></i>
+              </div>
+              <div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Cần bảo trì / lỗi (10%)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Khối chính: Cần xử lý & Thiết bị theo phòng -->
+        <div class="row g-4 mb-4">
+          <!-- Khối Cần xử lý -->
+          <div class="col-lg-6">
+            <div class="content-card h-100 mb-0">
+              <div class="content-card-header">
+                <h2 class="content-card-title">Cần xử lý</h2>
+                <span class="badge bg-danger-subtle text-danger border-0">4 mục</span>
+              </div>
+              <div class="content-card-body p-0">
+                <div class="action-needed-list">
+                  <div class="action-needed-item">
+                    <div class="action-needed-meta">
+                      <div class="action-needed-count bg-warning-subtle text-warning-emphasis">3</div>
+                      <div>
+                        <div class="action-needed-title">Phiếu mượn chờ xét duyệt</div>
+                        <div class="action-needed-desc">Yêu cầu mượn thiết bị mới từ sinh viên và giảng viên</div>
+                      </div>
+                    </div>
+                    <a href="borrowing.html?status=pending" class="btn btn-outline-primary btn-sm">Xử lý</a>
+                  </div>
+
+                  <div class="action-needed-item">
+                    <div class="action-needed-meta">
+                      <div class="action-needed-count bg-danger-subtle text-danger">2</div>
+                      <div>
+                        <div class="action-needed-title">Phiếu mượn quá hạn trả</div>
+                        <div class="action-needed-desc">Thiết bị chưa được hoàn trả theo thời hạn cam kết</div>
+                      </div>
+                    </div>
+                    <a href="borrowing.html?status=overdue" class="btn btn-outline-danger btn-sm">Thu hồi</a>
+                  </div>
+
+                  <div class="action-needed-item">
+                    <div class="action-needed-meta">
+                      <div class="action-needed-count bg-warning-subtle text-warning-emphasis">4</div>
+                      <div>
+                        <div class="action-needed-title">Yêu cầu bảo trì chờ tiếp nhận</div>
+                        <div class="action-needed-desc">Sự cố thiết bị phòng thực hành vừa được ghi nhận</div>
+                      </div>
+                    </div>
+                    <a href="maintenance.html?status=pending" class="btn btn-outline-primary btn-sm">Tiếp nhận</a>
+                  </div>
+
+                  <div class="action-needed-item">
+                    <div class="action-needed-meta">
+                      <div class="action-needed-count bg-secondary-subtle text-secondary">1</div>
+                      <div>
+                        <div class="action-needed-title">Thiết bị đề xuất thanh lý</div>
+                        <div class="action-needed-desc">Hỏng hóc nặng, chi phí phục hồi vượt ngưỡng cho phép</div>
+                      </div>
+                    </div>
+                    <a href="maintenance.html?status=discard" class="btn btn-outline-secondary btn-sm">Xem</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Khối Thiết bị theo phòng -->
+          <div class="col-lg-6">
+            <div class="content-card h-100 mb-0">
+              <div class="content-card-header">
+                <h2 class="content-card-title">Phân bố thiết bị theo phòng</h2>
+                <span class="badge bg-light text-muted border">4 phòng</span>
+              </div>
+              <div class="content-card-body">
+                <!-- Lab 301 -->
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.85rem;">
+                    <span><strong>Lab 301</strong> (Máy tính chuyên đề)</span>
+                    <span class="text-muted">45 thiết bị</span>
+                  </div>
+                  <div class="progress" style="height: 6px;">
+                    <div class="progress-bar bg-success" style="width: 75%;" title="Sẵn sàng: 75%"></div>
+                    <div class="progress-bar bg-warning" style="width: 15%;" title="Đang mượn: 15%"></div>
+                    <div class="progress-bar bg-danger" style="width: 10%;" title="Bảo trì: 10%"></div>
+                  </div>
+                </div>
+
+                <!-- Lab 302 -->
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.85rem;">
+                    <span><strong>Lab 302</strong> (Mạng máy tính & Cisco)</span>
+                    <span class="text-muted">38 thiết bị</span>
+                  </div>
+                  <div class="progress" style="height: 6px;">
+                    <div class="progress-bar bg-success" style="width: 80%;"></div>
+                    <div class="progress-bar bg-warning" style="width: 12%;"></div>
+                    <div class="progress-bar bg-danger" style="width: 8%;"></div>
+                  </div>
+                </div>
+
+                <!-- Xưởng Điện tử -->
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.85rem;">
+                    <span><strong>Xưởng Điện tử</strong> (Đo lường & Nguồn)</span>
+                    <span class="text-muted">25 thiết bị</span>
+                  </div>
+                  <div class="progress" style="height: 6px;">
+                    <div class="progress-bar bg-success" style="width: 65%;"></div>
+                    <div class="progress-bar bg-warning" style="width: 25%;"></div>
+                    <div class="progress-bar bg-danger" style="width: 10%;"></div>
+                  </div>
+                </div>
+
+                <!-- Lab IoT -->
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.85rem;">
+                    <span><strong>Lab IoT & Viễn thông</strong></span>
+                    <span class="text-muted">20 thiết bị</span>
+                  </div>
+                  <div class="progress" style="height: 6px;">
+                    <div class="progress-bar bg-success" style="width: 70%;"></div>
+                    <div class="progress-bar bg-warning" style="width: 20%;"></div>
+                    <div class="progress-bar bg-danger" style="width: 10%;"></div>
+                  </div>
+                </div>
+
+                <!-- Chú thích -->
+                <div class="pt-2 d-flex justify-content-between text-muted border-top" style="font-size: 0.75rem;">
+                  <div><span class="d-inline-block rounded-circle bg-success me-1" style="width: 7px; height: 7px;"></span> Sẵn sàng (73%)</div>
+                  <div><span class="d-inline-block rounded-circle bg-warning me-1" style="width: 7px; height: 7px;"></span> Đang mượn (17%)</div>
+                  <div><span class="d-inline-block rounded-circle bg-danger me-1" style="width: 7px; height: 7px;"></span> Cần bảo trì (10%)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Khối Hoạt động gần đây -->
+        <div class="content-card mb-0">
+          <div class="content-card-header">
+            <h2 class="content-card-title">Hoạt động gần đây</h2>
+            <span class="badge bg-light text-muted border">Nhật ký hệ thống</span>
+          </div>
+          <div class="content-card-body p-0">
+            <div class="list-group list-group-flush" style="font-size: 0.875rem;">
+              <div class="list-group-item px-3 py-2 d-flex gap-3 align-items-center">
+                <div class="text-warning"><i class="bi bi-exclamation-triangle"></i></div>
+                <div class="flex-grow-1">
+                  <strong>Báo hỏng máy trạm HP Z2 Tower (Lab 301)</strong> — Tạo phiếu BT-2026-202
+                </div>
+                <div class="text-muted" style="font-size: 0.78rem;">13/10/2026 15:45</div>
+              </div>
+
+              <div class="list-group-item px-3 py-2 d-flex gap-3 align-items-center">
+                <div class="text-success"><i class="bi bi-check2"></i></div>
+                <div class="flex-grow-1">
+                  <strong>Hoàn trả thiết bị Nguồn DC Siglent SPD3303X</strong> — Nghiệm thu nguyên vẹn
+                </div>
+                <div class="text-muted" style="font-size: 0.78rem;">13/10/2026 11:20</div>
+              </div>
+
+              <div class="list-group-item px-3 py-2 d-flex gap-3 align-items-center">
+                <div class="text-primary"><i class="bi bi-box-arrow-up-right"></i></div>
+                <div class="flex-grow-1">
+                  <strong>Bàn giao Dao động ký Tektronix (Phiếu PM-2026-102)</strong> — Ký biên bản giao nhận
+                </div>
+                <div class="text-muted" style="font-size: 0.78rem;">12/10/2026 09:00</div>
+              </div>
+
+              <div class="list-group-item px-3 py-2 d-flex gap-3 align-items-center">
+                <div class="text-info"><i class="bi bi-qr-code-scan"></i></div>
+                <div class="flex-grow-1">
+                  <strong>Kiểm kê định kỳ Phòng Lab 301</strong> — Quét đối soát 32 thiết bị thành công
+                </div>
+                <div class="text-muted" style="font-size: 0.78rem;">10/10/2026 16:30</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="mockToast" class="toast align-items-center border-0 shadow-sm" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-white border-bottom">
+        <i id="mockToastIcon" class="bi bi-info-circle-fill text-primary me-2"></i>
+        <strong id="mockToastTitle" class="me-auto text-dark">Thông báo</strong>
+        <small class="text-muted">Vừa xong</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div id="mockToastBody" class="toast-body bg-white text-secondary" style="font-size: 0.85rem;">
+        Chưa có thay đổi được lưu.
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App JS dùng chung -->
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
