@@ -14,7 +14,7 @@ Trước khi sửa, sidebar xanh đen chiếm nhiều chú ý, biểu tượng m
 
 Ở bản thử ngày 14/11, số liệu, tên người và phiếu trong HTML là **dữ liệu mẫu**. Các biểu mẫu và nút nghiệp vụ chưa kết nối cơ sở dữ liệu. Màn hình thiết bị khi đó còn theo mã riêng lẻ, trong khi mô hình nghiệp vụ đã chọn quản lý **loại thiết bị theo số lượng**. Phần thiết bị được chỉnh lại ngày 18/11 như mô tả bên dưới.
 
-Khả năng phục hồi: nhánh `codex/unslop-demo` chứa bản thử; giao diện trước khi chỉnh ở commit `2b25ebb` trên `main`. Chưa push nhánh này.
+Khả năng phục hồi: nhánh `khan-dev` chứa bản thử; giao diện trước khi chỉnh ở commit `2b25ebb` trên `main`.
 
 Ý tưởng và quy trình chỉnh giao diện tham khảo **Unslop** của Damir Sokolovsky ([@heydamir](https://x.com/heydamir)), [mã nguồn](https://github.com/heydamir/unslop), giấy phép CC BY 4.0.
 
@@ -24,7 +24,7 @@ Sau khi nhóm chốt [bố cục chung trên Figma](https://www.figma.com/design
 
 Lúc khởi tạo ba màn hình, tìm kiếm, lọc phòng, mở chi tiết và tính chênh lệch hoạt động trên trình duyệt. Các thao tác còn lại được bổ sung trong bản cập nhật bên dưới. QR theo mô hình này nhận diện **loại thiết bị**, không nhận diện từng chiếc. Phần mượn trả/bảo trì của Tài vẫn ở trang cũ để ghép và đồng bộ nghiệp vụ ở bước tiếp theo.
 
-Mã nguồn bản này nằm ở nhánh `codex/unslop-demo`; bản `equipment.html` trước khi thay đổi được lưu tạm ở `tmp/equipment-before-khang-18-11.html` và còn có thể lấy lại từ Git. Chưa push.
+Mã nguồn bản này nằm ở nhánh `khan-dev`; bản `equipment.html` trước khi thay đổi có thể lấy lại từ Git.
 
 ## Bản demo tương tác cục bộ ngày 18/11/2026
 
