@@ -1,0 +1,105 @@
+# Laravel & PHP
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment & Credentials
+.env
+.env.backup
+.env.production
+*.key
+
+# Storage & Cache (Laravel)
+/storage/*.key
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+!/storage/logs/.gitignore
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# Testing & Coverage
+.phpunit.result.cache
+/coverage/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE & Editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary / Scratch files
+*.bak
+*.tmp
+*.log
+__pycache__/
+*.pyc
+/.codegraph/
+/tmp/
+
+# Frontend local/private files and generated output
+# Keep source HTML/CSS/JS, README and intentional assets tracked.
+prototype/frontend/.env
+prototype/frontend/.env.*
+!prototype/frontend/.env.example
+prototype/frontend/*.local
+prototype/frontend/*.secret
+prototype/frontend/*.secret.*
+prototype/frontend/**/*.local
+prototype/frontend/**/*.secret
+prototype/frontend/**/*.secret.*
+prototype/frontend/*.pem
+prototype/frontend/*.key
+prototype/frontend/*.p12
+prototype/frontend/*.pfx
+prototype/frontend/*.crt
+prototype/frontend/**/*.pem
+prototype/frontend/**/*.key
+prototype/frontend/**/*.p12
+prototype/frontend/**/*.pfx
+prototype/frontend/**/*.crt
+prototype/frontend/*.sqlite
+prototype/frontend/*.sqlite3
+prototype/frontend/*.db
+prototype/frontend/**/*.sqlite
+prototype/frontend/**/*.sqlite3
+prototype/frontend/**/*.db
+prototype/frontend/secrets/
+prototype/frontend/private/
+prototype/frontend/uploads/
+prototype/frontend/logs/
+prototype/frontend/tmp/
+prototype/frontend/cache/
+prototype/frontend/coverage/
+prototype/frontend/dist/
+prototype/frontend/build/
+prototype/frontend/node_modules/
+prototype/frontend/screenshots/
+prototype/frontend/.history/
+prototype/frontend/.vscode/
+prototype/frontend/.idea/
+prototype/frontend/*.bak
+prototype/frontend/*.tmp
+prototype/frontend/*.log
