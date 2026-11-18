@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quản Lý Mượn Trả Thiết Bị - LabDevice Hub</title>
-  <!-- Bootstrap 5 CSS -->
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <!-- Style dùng chung -->
-  <link rel="stylesheet" href="assets/css/style.css">
+
+  <link rel="stylesheet" href="assets/css/style.css?v=sidebar-4">
 </head>
 <body>
 
   <div class="app-layout">
-    <!-- Sidebar -->
+
     <aside class="app-sidebar" id="appSidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo-icon">
@@ -26,59 +26,51 @@
         </div>
       </div>
 
-      <nav class="sidebar-nav">
-        <div class="nav-section-title">Hệ thống</div>
-        <a href="index.html" class="sidebar-link">
-          <i class="bi bi-speedometer2"></i>
-          <span>Tổng quan</span>
-        </a>
-
-        <div class="nav-section-title">Phân hệ nghiệp vụ</div>
-        <a href="equipment.html" class="sidebar-link">
-          <i class="bi bi-pc-display-horizontal"></i>
-          <span>Thiết bị & Kiểm kê</span>
-        </a>
-        <a href="borrowing.html" class="sidebar-link active">
-          <i class="bi bi-journal-arrow-up"></i>
-          <span>Mượn trả thiết bị</span>
-        </a>
-        <a href="maintenance.html" class="sidebar-link">
-          <i class="bi bi-tools"></i>
-          <span>Báo hỏng & Bảo trì</span>
-        </a>
-
-      </nav>
+      <nav class="sidebar-nav" aria-label="Điều hướng chính">
+  <div class="nav-section-title">Hệ thống</div>
+  <a href="index.html?v=week3-20261118b" class="sidebar-link"><i class="bi bi-speedometer2" aria-hidden="true"></i><span>Tổng quan</span></a>
+  <div class="nav-section-title">Nghiệp vụ</div>
+  <details class="sidebar-group">
+    <summary class="sidebar-link sidebar-group-toggle"><i class="bi bi-pc-display-horizontal" aria-hidden="true"></i><span>Thiết bị &amp; Kiểm kê</span></summary>
+    <div class="sidebar-submenu">
+      <a href="equipment.html?v=week3-20261118b" class="sidebar-link sidebar-subitem"><i class="bi bi-pc-display-horizontal" aria-hidden="true"></i><span>Thiết bị</span></a>
+      <a href="inventory.html?v=week3-20261118b" class="sidebar-link sidebar-subitem"><i class="bi bi-clipboard-check" aria-hidden="true"></i><span>Kiểm kê</span></a>
+    </div>
+  </details>
+  <a href="borrowing.html?v=week3-20261118b" class="sidebar-link active" aria-current="page"><i class="bi bi-journal-arrow-up" aria-hidden="true"></i><span>Mượn trả thiết bị</span></a>
+  <a href="maintenance.html?v=week3-20261118b" class="sidebar-link"><i class="bi bi-tools" aria-hidden="true"></i><span>Báo hỏng &amp; Bảo trì</span></a>
+</nav>
 
 
     </aside>
 
-    <!-- Backdrop cho mobile -->
+
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    <!-- Vùng nội dung chính -->
+
     <div class="app-main">
-      <!-- Navbar -->
+
       <header class="app-navbar">
         <div class="d-flex align-items-center gap-3">
-          <button class="btn btn-outline-secondary btn-sm" id="sidebarToggleBtn" aria-label="Toggle Sidebar">
+          <button class="btn btn-outline-secondary btn-sm" id="sidebarToggleBtn" aria-label="Mở menu">
             <i class="bi bi-list fs-5"></i>
           </button>
-          <nav aria-label="breadcrumb">
+          <nav aria-label="Đường dẫn">
             <ol class="breadcrumb mb-0">
-              <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href="index.html?v=week3-20261118b" class="text-decoration-none">Trang chủ</a></li>
               <li class="breadcrumb-item active" aria-current="page">Mượn trả thiết bị</li>
             </ol>
           </nav>
         </div>
 
         <div class="d-flex align-items-center gap-3">
-<div class="navbar-user-badge"><div class="user-avatar"><i class="bi bi-person"></i></div><div class="d-none d-sm-block">Quản trị viên</div></div>
+<div class="navbar-user-badge"><div class="user-avatar"><i class="bi bi-person"></i></div><div class="d-none d-sm-block">Nhân viên phòng thực hành</div></div>
         </div>
       </header>
 
-      <!-- Nội dung trang -->
+
       <main class="page-container">
-        <!-- Header tiêu đề -->
+
         <div class="page-header-box d-flex flex-wrap align-items-center justify-content-between gap-3">
           <div>
             <h1 class="page-title">Mượn trả thiết bị</h1>
@@ -91,7 +83,7 @@
           </div>
         </div>
 
-        <!-- Khối thống kê KPI -->
+
         <div class="row g-3 mb-4">
           <div class="col-6 col-lg-3">
             <div class="stat-card d-flex align-items-center gap-3">
@@ -142,7 +134,7 @@
           </div>
         </div>
 
-        <!-- Bảng danh sách phiếu mượn trả -->
+
         <div class="content-card">
           <div class="content-card-header">
             <div class="d-flex align-items-center gap-2">
@@ -152,7 +144,7 @@
           </div>
 
           <div class="content-card-body">
-            <!-- Bộ lọc và tìm kiếm phẳng gọn -->
+
             <div class="table-toolbar">
               <div class="row g-2 align-items-center">
                 <div class="col-12 col-md-5">
@@ -190,7 +182,7 @@
               </div>
             </div>
 
-            <!-- Table Responsive -->
+
             <div class="table-responsive">
               <table class="table custom-table">
                 <thead>
@@ -207,7 +199,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Dòng 1: Chờ duyệt -->
+
                   <tr data-search-row="PM-2026-101 SV Nguyễn Văn An 2011001 CNTT pending sv" data-filter-status="pending" data-filter-user-type="sv">
                     <td>1</td>
                     <td><strong class="text-primary">PM-2026-101</strong></td>
@@ -217,7 +209,7 @@
                     </td>
                     <td>
                       <div>TB-2026-001</div>
-                      <small class="text-muted">Máy trạm Dell 3660</small>
+                      <small class="text-muted">Micro không dây cầm tay</small>
                     </td>
                     <td>14/10/2026 (13:30)</td>
                     <td>14/10/2026 (17:00)</td>
@@ -239,7 +231,7 @@
                     </td>
                   </tr>
 
-                  <!-- Dòng 2: Đang mượn hợp lệ -->
+
                   <tr data-search-row="PM-2026-102 SV Lê Thị Bình 2011002 Điện tử active sv" data-filter-status="active" data-filter-user-type="sv">
                     <td>2</td>
                     <td><strong class="text-primary">PM-2026-102</strong></td>
@@ -249,7 +241,7 @@
                     </td>
                     <td>
                       <div>TB-2026-002</div>
-                      <small class="text-muted">Dao động ký Tektronix</small>
+                      <small class="text-muted">Đầu chuyển USB-C sang USB-A</small>
                     </td>
                     <td>12/10/2026</td>
                     <td>15/10/2026</td>
@@ -271,7 +263,7 @@
                     </td>
                   </tr>
 
-                  <!-- Dòng 3: Quá hạn -->
+
                   <tr data-search-row="PM-2026-103 SV Trần Quốc Tuấn 2011003 Viễn thông overdue sv" data-filter-status="overdue" data-filter-user-type="sv">
                     <td>3</td>
                     <td><strong class="text-danger">PM-2026-103</strong></td>
@@ -281,7 +273,7 @@
                     </td>
                     <td>
                       <div>TB-2026-004</div>
-                      <small class="text-muted">Bộ kit STM32F4</small>
+                      <small class="text-muted">Chuột USB có dây</small>
                     </td>
                     <td>08/10/2026</td>
                     <td><span class="text-danger fw-bold">11/10/2026 (Trễ 3 ngày)</span></td>
@@ -303,7 +295,7 @@
                     </td>
                   </tr>
 
-                  <!-- Dòng 4: Đã duyệt chờ nhận -->
+
                   <tr data-search-row="PM-2026-104 SV Phạm Minh Đức 2011004 CNTT approved sv" data-filter-status="approved" data-filter-user-type="sv">
                     <td>4</td>
                     <td><strong class="text-primary">PM-2026-104</strong></td>
@@ -313,7 +305,7 @@
                     </td>
                     <td>
                       <div>TB-2026-006</div>
-                      <small class="text-muted">Nguồn DC Siglent SPD</small>
+                      <small class="text-muted">Cáp HDMI 2 m</small>
                     </td>
                     <td>14/10/2026</td>
                     <td>16/10/2026</td>
@@ -335,7 +327,7 @@
                     </td>
                   </tr>
 
-                  <!-- Dòng 5: Đã hoàn trả -->
+
                   <tr data-search-row="PM-2026-105 GV Đỗ Hoàng Nam Giảng viên Lab Mạng returned gv" data-filter-status="returned" data-filter-user-type="gv">
                     <td>5</td>
                     <td><strong class="text-primary">PM-2026-105</strong></td>
@@ -345,7 +337,7 @@
                     </td>
                     <td>
                       <div>TB-2026-005</div>
-                      <small class="text-muted">Switch Cisco 2960-X</small>
+                      <small class="text-muted">Loa di động</small>
                     </td>
                     <td>05/10/2026</td>
                     <td>10/10/2026</td>
@@ -362,7 +354,7 @@
                     </td>
                   </tr>
 
-                  <!-- Dòng 6: Chờ duyệt -->
+
                   <tr data-search-row="PM-2026-106 SV Hoàng Văn Long 2011005 CNTT pending sv" data-filter-status="pending" data-filter-user-type="sv">
                     <td>6</td>
                     <td><strong class="text-primary">PM-2026-106</strong></td>
@@ -372,7 +364,7 @@
                     </td>
                     <td>
                       <div>TB-2026-008</div>
-                      <small class="text-muted">Router Cisco 4321</small>
+                      <small class="text-muted">Bàn phím USB có dây</small>
                     </td>
                     <td>15/10/2026</td>
                     <td>18/10/2026</td>
@@ -394,7 +386,7 @@
                     </td>
                   </tr>
 
-                  <!-- Dòng 7: Đang mượn -->
+
                   <tr data-search-row="PM-2026-107 SV Vũ Hải Yến 2011006 Điện tử active sv" data-filter-status="active" data-filter-user-type="sv">
                     <td>7</td>
                     <td><strong class="text-primary">PM-2026-107</strong></td>
@@ -404,7 +396,7 @@
                     </td>
                     <td>
                       <div>TB-2026-006</div>
-                      <small class="text-muted">Nguồn DC Siglent SPD</small>
+                      <small class="text-muted">Cáp HDMI 2 m</small>
                     </td>
                     <td>13/10/2026</td>
                     <td>16/10/2026</td>
@@ -426,7 +418,7 @@
                     </td>
                   </tr>
 
-                  <!-- Dòng 8: Đã từ chối -->
+
                   <tr data-search-row="PM-2026-108 SV Đặng Thị Mai 2011007 CNTT rejected sv" data-filter-status="rejected" data-filter-user-type="sv">
                     <td>8</td>
                     <td><strong class="text-secondary">PM-2026-108</strong></td>
@@ -436,7 +428,7 @@
                     </td>
                     <td>
                       <div>TB-2026-003</div>
-                      <small class="text-muted">Máy chiếu Panasonic</small>
+                      <small class="text-muted">Máy chiếu dự phòng</small>
                     </td>
                     <td>11/10/2026</td>
                     <td>11/10/2026</td>
@@ -453,7 +445,7 @@
                     </td>
                   </tr>
 
-                  <!-- Trạng thái không có kết quả -->
+
                   <tr id="emptyStateRow" style="display: none;">
                     <td colspan="9">
                       <div class="empty-state">
@@ -470,7 +462,7 @@
               </table>
             </div>
 
-            <!-- Phân trang minh họa -->
+
             <div class="d-flex align-items-center justify-content-between mt-3 flex-wrap gap-2">
               <div class="text-muted" style="font-size: 0.85rem;">
                 Hiển thị trang 1 trên 1 (Dữ liệu mẫu 8 phiếu)
@@ -487,7 +479,7 @@
     </div>
   </div>
 
-  <!-- MODAL: Tạo phiếu đăng ký mượn mới -->
+
   <div class="modal fade" id="createBorrowModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -528,10 +520,10 @@
                 <label class="form-label">Thiết bị cần mượn<span class="form-required">*</span></label>
                 <select class="form-select" required>
                   <option value="">-- Chọn thiết bị đang sẵn sàng --</option>
-                  <option value="TB-2026-001">TB-2026-001 — Máy trạm Dell Precision (Lab 301)</option>
-                  <option value="TB-2026-004">TB-2026-004 — Bộ kit STM32F4 Discovery (Lab IoT)</option>
-                  <option value="TB-2026-005">TB-2026-005 — Switch Cisco Catalyst 2960-X (Lab 302)</option>
-                  <option value="TB-2026-008">TB-2026-008 — Router Cisco ISR 4321 (Lab 302)</option>
+                  <option value="TB-2026-001">TB-2026-001 — Micro không dây cầm tay (PTN Kỹ thuật điện tử B203)</option>
+                  <option value="TB-2026-002">TB-2026-002 — Đầu chuyển USB-C sang USB-A (Xưởng thực tập điện tử B201)</option>
+                  <option value="TB-2026-005">TB-2026-005 — Loa di động (PTN Viễn thông A307)</option>
+                  <option value="TB-2026-008">TB-2026-008 — Bàn phím USB có dây (PTN Viễn thông A307)</option>
                 </select>
                 <div class="form-hint text-success"><i class="bi bi-check-circle me-1"></i>Chỉ liệt kê thiết bị có trạng thái sẵn sàng (Khóa các thiết bị đang hỏng/bảo trì)</div>
               </div>
@@ -572,7 +564,7 @@
     </div>
   </div>
 
-  <!-- MODAL: Xem chi tiết phiếu mượn -->
+
   <div class="modal fade" id="viewBorrowDetailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -590,14 +582,14 @@
                 <tr><td class="text-muted" style="width: 120px;">Họ tên:</td><td><strong>Nguyễn Văn An</strong></td></tr>
                 <tr><td class="text-muted">MSSV:</td><td>2011001</td></tr>
                 <tr><td class="text-muted">Lớp / Khoa:</td><td>Lớp 20T1 - Khoa CNTT</td></tr>
-                <tr><td class="text-muted">Liên hệ:</td><td>0901234567 • an.nv@student.edu.vn</td></tr>
+                <tr><td class="text-muted">Liên hệ:</td><td>0000000000 • sv.demo@example.com</td></tr>
               </table>
             </div>
 
             <div class="col-md-6">
               <h6 class="fw-bold border-bottom pb-1">Thiết bị & Thời gian</h6>
               <table class="table table-sm table-borderless">
-                <tr><td class="text-muted" style="width: 120px;">Thiết bị:</td><td><strong>TB-2026-001 (Dell 3660)</strong></td></tr>
+                <tr><td class="text-muted" style="width: 120px;">Thiết bị:</td><td><strong>TB-2026-001 (Micro không dây cầm tay)</strong></td></tr>
                 <tr><td class="text-muted">Thời điểm mượn:</td><td>14/10/2026 (13:30)</td></tr>
                 <tr><td class="text-muted">Hạn trả:</td><td>14/10/2026 (17:00)</td></tr>
                 <tr><td class="text-muted">Trạng thái:</td><td><span class="badge-status badge-ticket-pending"><span class="badge-status-dot"></span>Chờ xét duyệt</span></td></tr>
@@ -624,7 +616,7 @@
     </div>
   </div>
 
-  <!-- MODAL: Xác nhận trả thiết bị -->
+
   <div class="modal fade" id="confirmReturnModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -662,7 +654,7 @@
     </div>
   </div>
 
-  <!-- Toast Container -->
+
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="mockToast" class="toast align-items-center border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header bg-white border-bottom">
@@ -677,9 +669,9 @@
     </div>
   </div>
 
-  <!-- Bootstrap 5 Bundle JS -->
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- App JS dùng chung -->
-  <script src="assets/js/app.js"></script>
+
+  <script src="assets/js/app.js?v=unslop-1"></script>
 </body>
 </html>

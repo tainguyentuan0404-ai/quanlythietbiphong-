@@ -1,19 +1,13 @@
-/**
- * JAVASCRIPT DÙNG CHUNG - LABDEVICE HUB (CLEAN & MODERN)
- * Phục vụ tương tác mô phỏng trên giao diện (Frontend Prototype)
- */
+
 
 document.addEventListener('DOMContentLoaded', function () {
   initSidebar();
-  initToast();
   initMockForms();
   initTableSearchAndFilters();
   initMockActions();
 });
 
-/**
- * 1. Khởi tạo Sidebar (Thu gọn trên mobile và desktop)
- */
+
 function initSidebar() {
   const toggleBtn = document.getElementById('sidebarToggleBtn');
   const sidebar = document.getElementById('appSidebar');
@@ -34,9 +28,7 @@ function initSidebar() {
   }
 }
 
-/**
- * 2. Hiển thị Toast thông báo tương tác mô phỏng
- */
+
 function showToast(title, message, type = 'success') {
   const toastEl = document.getElementById('mockToast');
   if (!toastEl) return;
@@ -65,9 +57,7 @@ function showToast(title, message, type = 'success') {
   toast.show();
 }
 
-/**
- * 3. Xử lý gửi Form mô phỏng
- */
+
 function initMockForms() {
   const forms = document.querySelectorAll('form[data-mock-form]');
 
@@ -84,7 +74,6 @@ function initMockForms() {
       const formName = form.getAttribute('data-mock-form') || 'biểu mẫu';
       const actionType = form.getAttribute('data-mock-action') || 'Lưu dữ liệu';
 
-      // Ẩn modal nếu form nằm trong modal
       const modalEl = form.closest('.modal');
       if (modalEl) {
         const modalInstance = bootstrap.Modal.getInstance(modalEl);
@@ -105,9 +94,7 @@ function initMockForms() {
   });
 }
 
-/**
- * 4. Tìm kiếm và lọc dữ liệu trên bảng (Hỗ trợ URL search parameters)
- */
+
 function initTableSearchAndFilters() {
   const searchInput = document.getElementById('tableSearchInput');
   const filterSelects = document.querySelectorAll('.table-filter-select');
@@ -124,7 +111,6 @@ function initTableSearchAndFilters() {
     const keyword = searchInput ? searchInput.value.toLowerCase().trim() : '';
     let visibleCount = 0;
 
-    // Lấy giá trị của từng filter select
     const activeFilters = {};
     filterSelects.forEach(sel => {
       const field = sel.getAttribute('data-filter-field');
@@ -138,13 +124,11 @@ function initTableSearchAndFilters() {
       let matchesKeyword = true;
       let matchesFilters = true;
 
-      // Kiểm tra từ khóa
       if (keyword) {
         const searchableText = row.getAttribute('data-search-row').toLowerCase();
         matchesKeyword = searchableText.includes(keyword);
       }
 
-      // Kiểm tra bộ lọc thuộc tính
       for (const [field, requiredVal] of Object.entries(activeFilters)) {
         const rowVal = (row.getAttribute(`data-filter-${field}`) || '').toLowerCase();
         if (rowVal !== requiredVal) {
@@ -161,18 +145,15 @@ function initTableSearchAndFilters() {
       }
     });
 
-    // Cập nhật số lượng
     if (countBadge) {
       countBadge.textContent = `${visibleCount} / ${rows.length}`;
     }
 
-    // Hiển thị trạng thái rỗng nếu visibleCount = 0
     if (emptyStateRow) {
       emptyStateRow.style.display = visibleCount === 0 ? '' : 'none';
     }
   }
 
-  // Đọc tham số URL khi tải trang (ví dụ ?status=pending hoặc ?status=overdue)
   const urlParams = new URLSearchParams(window.location.search);
   const statusParam = urlParams.get('status');
   if (statusParam) {
@@ -186,7 +167,6 @@ function initTableSearchAndFilters() {
     });
   }
 
-  // Áp dụng bộ lọc ngay lúc khởi động
   applyFilters();
 
   if (searchInput) {
@@ -207,9 +187,7 @@ function initTableSearchAndFilters() {
   }
 }
 
-/**
- * 5. Các nút thao tác nhanh mẫu (Xem chi tiết, Khóa, Duyệt, v.v.)
- */
+
 function initMockActions() {
   document.querySelectorAll('[data-mock-action-btn]').forEach(btn => {
     btn.addEventListener('click', function () {
