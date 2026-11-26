@@ -1,26 +1,50 @@
 <!doctype html>
 <html lang="vi">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Kiểm kê · LabDevice Hub</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><link rel="stylesheet" href="assets/css/style.css?v=sidebar-4"><link rel="stylesheet" href="assets/css/khang.css?v=2"></head>
-<body><div class="app-layout"><aside class="app-sidebar" id="appSidebar"><div class="sidebar-header"><div class="sidebar-logo-icon"><i class="bi bi-cpu"></i></div><div><div class="sidebar-title">LabDevice Hub</div><div class="sidebar-subtitle">Quản lý phòng thực hành</div></div></div><nav class="sidebar-nav" aria-label="Điều hướng chính">
-  <div class="nav-section-title">Hệ thống</div>
-  <a href="index.html?v=week3-20261118b" class="sidebar-link"><i class="bi bi-speedometer2" aria-hidden="true"></i><span>Tổng quan</span></a>
-  <div class="nav-section-title">Nghiệp vụ</div>
-  <details class="sidebar-group" open>
-    <summary class="sidebar-link sidebar-group-toggle"><i class="bi bi-pc-display-horizontal" aria-hidden="true"></i><span>Thiết bị &amp; Kiểm kê</span></summary>
-    <div class="sidebar-submenu">
-      <a href="equipment.html?v=week3-20261118b" class="sidebar-link sidebar-subitem"><i class="bi bi-pc-display-horizontal" aria-hidden="true"></i><span>Thiết bị</span></a>
-      <a href="inventory.html?v=week3-20261118b" class="sidebar-link sidebar-subitem active" aria-current="page"><i class="bi bi-clipboard-check" aria-hidden="true"></i><span>Kiểm kê</span></a>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kiểm kê · LabDevice Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=sidebar-4">
+  <link rel="stylesheet" href="assets/css/khang.css?v=2">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header"><div class="sidebar-logo-icon"><i class="bi bi-cpu"></i></div><div><div class="sidebar-title">LabDevice Hub</div><div class="sidebar-subtitle">Quản lý phòng thực hành</div></div></div>
+      <nav class="sidebar-nav" aria-label="Điều hướng chính">
+        <div class="nav-section-title">Hệ thống</div>
+        <a href="index.html" class="sidebar-link"><i class="bi bi-speedometer2" aria-hidden="true"></i><span>Tổng quan</span></a>
+        <div class="nav-section-title">Nghiệp vụ</div>
+        <details class="sidebar-group" open>
+          <summary class="sidebar-link sidebar-group-toggle"><i class="bi bi-pc-display-horizontal" aria-hidden="true"></i><span>Thiết bị &amp; Kiểm kê</span></summary>
+          <div class="sidebar-submenu">
+            <a href="equipment.html" class="sidebar-link sidebar-subitem"><i class="bi bi-pc-display-horizontal" aria-hidden="true"></i><span>Thiết bị</span></a>
+            <a href="inventory.html" class="sidebar-link sidebar-subitem active" aria-current="page"><i class="bi bi-clipboard-check" aria-hidden="true"></i><span>Kiểm kê</span></a>
+          </div>
+        </details>
+        <a href="borrowing.html" class="sidebar-link"><i class="bi bi-journal-arrow-up" aria-hidden="true"></i><span>Mượn trả thiết bị</span></a>
+        <a href="maintenance.html" class="sidebar-link"><i class="bi bi-tools" aria-hidden="true"></i><span>Báo hỏng &amp; Bảo trì</span></a>
+      </nav>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="app-main">
+      <header class="app-navbar"><div class="d-flex align-items-center gap-3"><button class="btn btn-outline-secondary btn-sm" id="sidebarToggleBtn" aria-label="Mở menu"><i class="bi bi-list fs-5"></i></button><nav aria-label="Đường dẫn"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li><li class="breadcrumb-item active" aria-current="page">Kiểm kê</li></ol></nav></div><div class="navbar-user-badge"><div class="user-avatar"><i class="bi bi-person" aria-hidden="true"></i></div><div class="d-none d-sm-block">Nhân viên phòng thực hành</div></div></header>
+      <main class="page-container khang-page">
+        <div class="page-heading"><div><h1>Kiểm kê thiết bị</h1><p>Đối chiếu số lượng thực tế với số đang ghi nhận theo từng loại</p></div><button class="btn btn-primary btn-sm" type="button" data-khang-action="new-round"><i class="bi bi-plus-lg me-1"></i> Tạo đợt kiểm kê</button></div>
+        <section class="data-panel" aria-labelledby="inventory-title">
+          <div class="panel-heading"><div><h2 id="inventory-title">Đợt kiểm kê</h2><p>Dữ liệu đối soát được tải từ backend Laravel</p></div><button class="btn btn-outline-primary" type="button" data-khang-action="scan"><i class="bi bi-qr-code-scan me-1"></i> Tra mã QR</button></div>
+          <div class="table-responsive"><table class="table khang-table inventory-table"><thead><tr><th scope="col">Mã loại</th><th scope="col">Loại thiết bị</th><th scope="col" class="num">Số cần đối chiếu</th><th scope="col">Đếm thực tế</th><th scope="col" class="num">Chênh lệch</th><th scope="col">Ghi chú</th></tr></thead><tbody><tr><td colspan="6" class="text-center text-muted py-4">Chưa có dòng kiểm kê nào.</td></tr></tbody></table></div>
+          <div class="panel-bottom"><p id="inventorySummary">Chưa có đợt kiểm kê nào đang mở</p><div class="d-flex gap-2"><button id="inventoryReset" type="button" class="btn btn-outline-secondary" disabled>Xóa số đếm</button><button id="inventoryFinish" type="button" class="btn btn-primary" disabled>Hoàn tất đối soát</button></div></div>
+        </section>
+        <section class="data-panel mt-4"><div class="panel-heading"><h2>Lịch sử đợt kiểm kê</h2></div><div id="inventoryHistory" class="history-placeholder">Chưa có đợt nào được hoàn tất.</div></section>
+        <p id="khangNotice" class="notice" role="status" hidden></p>
+      </main>
     </div>
-  </details>
-  <a href="borrowing.html?v=week3-20261118b" class="sidebar-link"><i class="bi bi-journal-arrow-up" aria-hidden="true"></i><span>Mượn trả thiết bị</span></a>
-  <a href="maintenance.html?v=week3-20261118b" class="sidebar-link"><i class="bi bi-tools" aria-hidden="true"></i><span>Báo hỏng &amp; Bảo trì</span></a>
-</nav></aside><div class="sidebar-backdrop" id="sidebarBackdrop"></div><div class="app-main"><header class="app-navbar"><div class="d-flex align-items-center gap-3"><button class="btn btn-outline-secondary btn-sm" id="sidebarToggleBtn" aria-label="Mở menu"><i class="bi bi-list fs-5"></i></button><nav aria-label="Đường dẫn"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="index.html?v=week3-20261118b">Trang chủ</a></li><li class="breadcrumb-item active" aria-current="page">Kiểm kê</li></ol></nav></div><div class="navbar-user-badge"><div class="user-avatar"><i class="bi bi-person" aria-hidden="true"></i></div><div class="d-none d-sm-block">Nhân viên phòng thực hành</div></div></header>
-<main class="page-container khang-page"><div class="page-heading"><div><h1>Kiểm kê thiết bị</h1><p>Đối chiếu số lượng thực tế với số đang ghi nhận theo từng loại</p></div><button class="btn btn-primary btn-sm" type="button" data-khang-action="new-round"><i class="bi bi-plus-lg me-1"></i> Tạo đợt kiểm kê</button></div>
-<div class="guide-strip"><i class="bi bi-info-circle"></i><span>QR nhận diện <strong>loại thiết bị</strong>. Số lượng thực tế chỉ là số đếm tại chỗ; chênh lệch cần được đối soát trước khi cập nhật tồn.</span></div>
-<section class="data-panel" aria-labelledby="inventory-title"><div class="panel-heading"><div><h2 id="inventory-title">Đối chiếu thử · PTN Kỹ thuật điện tử B203</h2><p>Nhập số lượng đếm được để xem chênh lệch, chưa lưu vào hệ thống</p></div><button class="btn btn-outline-primary" type="button" data-khang-action="scan"><i class="bi bi-qr-code-scan me-1"></i> Tra mã QR</button></div>
-<div class="table-responsive"><table class="table khang-table inventory-table"><thead><tr><th scope="col">Mã loại</th><th scope="col">Loại thiết bị</th><th scope="col" class="num">Số cần đối chiếu</th><th scope="col">Đếm thực tế</th><th scope="col" class="num">Chênh lệch</th><th scope="col">Ghi chú</th></tr></thead><tbody>
-<tr data-inventory data-expected="4"><td class="mono">TB-L001</td><td>Micro không dây cầm tay</td><td class="num">4</td><td><label class="visually-hidden" for="count-l001">Số thực tế micro</label><input id="count-l001" class="count-input" type="number" min="0" step="1" inputmode="numeric" placeholder="Chưa đếm"></td><td class="num difference">—</td><td class="row-note">Chưa đối chiếu</td></tr>
-<tr data-inventory data-expected="2"><td class="mono">TB-L004</td><td>Máy chiếu dự phòng</td><td class="num">2</td><td><label class="visually-hidden" for="count-l004">Số thực tế máy chiếu dự phòng</label><input id="count-l004" class="count-input" type="number" min="0" step="1" inputmode="numeric" placeholder="Chưa đếm"></td><td class="num difference">—</td><td class="row-note">Chưa đối chiếu</td></tr>
-</tbody></table></div><div class="panel-bottom"><p id="inventorySummary">Chưa có loại nào được đếm</p><div class="d-flex gap-2"><button id="inventoryReset" type="button" class="btn btn-outline-secondary">Xóa số đếm thử</button><button id="inventoryFinish" type="button" class="btn btn-primary">Hoàn tất đối soát</button></div></div></section><section class="data-panel mt-4"><div class="panel-heading"><h2>Lịch sử đợt kiểm kê mẫu</h2></div><div id="inventoryHistory" class="history-placeholder">Chưa có đợt nào được hoàn tất</div></section>
-<div class="guide-strip muted-strip"><i class="bi bi-shield-check"></i><span>Chỉ phần số lượng sẵn sàng trong phòng được đối chiếu tại chỗ. Số đang mượn và đang bảo trì được theo dõi ở phiếu nghiệp vụ riêng.</span></div><p id="khangNotice" class="notice" role="status" hidden></p>
-</main></div></div><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="assets/js/app.js?v=unslop-1"></script><script src="assets/js/khang.js?v=5"></script></body></html>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/khang.js"></script>
+</body>
+</html>
