@@ -1,0 +1,21 @@
+{
+    "name": "lvtn/thiet-bi-phong-thuc-hanh",
+    "type": "project",
+    "require": {
+        "php": "^8.3",
+        "ext-pdo_mysql": "*",
+        "laravel/framework": "^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0"
+    }
+}
