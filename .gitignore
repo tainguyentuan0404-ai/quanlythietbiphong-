@@ -104,3 +104,15 @@ prototype/frontend/.idea/
 prototype/frontend/*.bak
 prototype/frontend/*.tmp
 prototype/frontend/*.log
+
+# Local private, credentials, notes, reports, and personal planning docs
+/_rieng/
+/pass.txt
+/note.md
+/bao-cao/
+/bai-tap-ngoai/
+/docs/ke-hoach/
+/docs/adr/
+/docs/tuan-2/
+/docs/doi-chieu-du-lieu-demo-stu.md
+/docs/doi-chieu-report-3-va-9-chuc-nang-18-11-2026.md
